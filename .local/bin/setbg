@@ -1,0 +1,20 @@
+#!/bin/sh
+
+if [ -f /home/kshmr/.local/share/background/cyberpunk-red2.jpg1 ]; then
+	xwallpaper --center /home/kshmr/.local/share/background/cyberpunk-red.jpg
+else
+	mpvflags=" --hwdec --loop --no-audio --no-osd-bar --no-osc --scale=nearest --no-input-default-bindings "
+	# xwinwrap -g 1920x1080 -b -s -fs -st -sp -nf -ov -fdt -- mpv -wid WID $mpvflags /home/kshmr/.local/share/background/cyberpunk-2077-car.gif &
+	
+	# xwinwrap -ni -g 1920x1080 -fs -s -st -sp -b -nf -un -- mpv -wid WID $mpvflags /home/kshmr/.local/share/background/cyberpunk-2077-car.gif &
+	monitor_number=$(xrandr --listmonitors | awk '{print $2}' | head -n 1)
+	echo $monitor_number
+	if [ $monitor_number == 1 ]; then
+		xwinwrap -b -s -fs -st -sp -nf -ov -fdt -- \
+			mpv -wid WID $mpvflags /home/kshmr/.local/share/background/cyberpunk-2077-car3.gif &
+	else
+		xwinwrap -b -s -fs -st -sp -nf -ov -fdt -- \
+			mpv -wid WID $mpvflags /home/kshmr/.local/share/background/doublecar.gif &
+	fi
+	
+fi
