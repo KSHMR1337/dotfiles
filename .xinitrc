@@ -56,8 +56,8 @@ xclock -geometry 50x50-1+1 &
 xrandr --setprovideroutputsource "AMD Radeon Graphics @ pci:0000:06:00.0" NVIDIA-0 
 xrandr --dpi 75
 xrandr --output eDP-1-0 --mode 1920x1080 --primary  
-xrandr --output HDMI-0 --right-of eDP-1-0 --mode 1366x768
-xrandr --output DP-2 --left-of eDP-1-0 --mode 1920x1080 
+xrandr --output DP-2 --right-of eDP-1-0 --mode 1366x768
+xrandr --output HDMI-0 --left-of eDP-1-0 --mode 1920x1080 
  
 setbg & 
 
