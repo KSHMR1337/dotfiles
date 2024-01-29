@@ -117,7 +117,7 @@ if [ "$color_prompt" = yes ]; then
 	ZSH_HIGHLIGHT_STYLES[reserved-word]=fg=cyan,bold
 	ZSH_HIGHLIGHT_STYLES[suffix-alias]=fg=green,underline
 	ZSH_HIGHLIGHT_STYLES[global-alias]=fg=#9f417b
-	ZSH_HIGHLIGHT_STYLES[precommand]=fg=#ac282b,underline
+	ZSH_HIGHLIGHT_STYLES[precommand]=fg=#bd17ff,underline
 	ZSH_HIGHLIGHT_STYLES[commandseparator]=fg=blue,bold
 	ZSH_HIGHLIGHT_STYLES[autodirectory]=fg=green,underline
 	ZSH_HIGHLIGHT_STYLES[path]=underline
@@ -213,8 +213,13 @@ fi
 alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
+
+# custom aliases
 alias vol3='vol'
 alias vol2='vol.py'
+alias rmdir='rm -rf'
+
+
 #enable auto-suggestions based on the history
 if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
    . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -225,21 +230,17 @@ fi
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/kshmr/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/home/zare/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/kshmr/miniforge3/etc/profile.d/conda.sh" ]; then
-        . "/home/kshmr/miniforge3/etc/profile.d/conda.sh"
+    if [ -f "/home/zare/miniforge3/etc/profile.d/conda.sh" ]; then
+        . "/home/zare/miniforge3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/kshmr/miniforge3/bin:$PATH"
+        export PATH="/home/zare/miniforge3/bin:$PATH"
     fi
 fi
 unset __conda_setup
-
-if [ -f "/home/kshmr/miniforge3/etc/profile.d/mamba.sh" ]; then
-    . "/home/kshmr/miniforge3/etc/profile.d/mamba.sh"
-fi
 # <<< conda initialize <<<
 
 

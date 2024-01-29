@@ -10,10 +10,7 @@ tmp1=$(find ~/.local/bin -type d -printf %p:)
 tmp2=$(find ~/.local/bin/dwmblocks -type d -printf %p:)
 export PATH="$PATH:${tmp1%%:}"
 export PATH="$PATH:${tmp2%%:}"
-export _JAVA_AWT_WM_NONREPARENTING=1
-export GTK_THEME=Material-Black-Cherry
-export GTK2_RC_FILES=/usr/share/themes/Material-Black-Cherry/gtk-2.0/gtkrc
-export QT_STYLE_OVERRIDE=Material-Black-Cherry
+
 ## GPU
 #export LIBVA_DRIVER_NAME=i965
 #
@@ -24,7 +21,7 @@ export QT_STYLE_OVERRIDE=Material-Black-Cherry
 #
 ## Default programs:
 export EDITOR="nvim"
-#export TERMINAL="st"
+export TERMINAL="st"
 #export BROWSER="librewolf"
 #export OPENER="xdg-open"
 #
