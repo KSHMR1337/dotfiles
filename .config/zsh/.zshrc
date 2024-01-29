@@ -72,23 +72,32 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-precmd_conda_info() {
-  if [[ -n $CONDA_PREFIX ]]; then
-      if [[ $(basename $CONDA_PREFIX) == "miniforge3" ]]; then
-        # Without this, it would display conda version
-        CONDA_ENV="base"
-      else
-        # For all environments that aren't (base)
-        CONDA_ENV="$(basename $CONDA_PREFIX)"
-      fi
-  # When no conda environment is active, don't show anything
+function conda_env()
+{
+    if [[ -n $CONDA_PREFIX ]]
+            then
+              if [[ $(basename $CONDA_PREFIX) == "miniforge3" ]]; then
+                # Without this, it would display conda version
+                echo "(base)"
+              else
+                # For all environments that aren't (base)
+                echo '('$(basename $CONDA_PREFIX)')'
+              fi
+          # When no conda environment is active, don't show anything
+    else
+    fi
+}    
+
+function git_branch_name()
+{
+  branch=$(git symbolic-ref HEAD 2> /dev/null | awk 'BEGIN{FS="/"} {print $NF}')
+  if [[ $branch == "" ]];
+  then
+      echo ""
   else
-    CONDA_ENV=""
+      echo '('$branch')'
   fi
 }
-
-# Run the previously defined function before each prompt
-precmd_functions+=( precmd_conda_info )
 
 
 # Allow substitutions and expansions in the prompt
@@ -97,7 +106,7 @@ setopt prompt_subst
 
 if [ "$color_prompt" = yes ]; then
 
-    PROMPT=$'%F{%(#.blue.green)}┌──(%B%F{reset}$CONDA_ENV%b%F{%(#.blue.green)})-(%B%F{%(#.red.blue)}%n@%m%b%F{%(#.blue.green)})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]\n└─%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
+    PROMPT=$'%F{%(#.blue.green)}┌──%B%F{reset}$(conda_env)%b%F{%(#.blue.green)}─(%B%F{%(#.red.blue)}%n@%m%b%F{%(#.blue.green)})─%B%F{reset}$(git_branch_name)%b%F{%(#.blue.green)}─[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]\n└──%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
     RPROMPT=$'%(?.. %? %F{red}%B⨯%b%F{reset})%(1j. %j %F{yellow}%B⚙%b%F{reset}.)'
     # enable syntax-highlighting
     if [ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && [ "$color_prompt" = yes ]; then
@@ -146,7 +155,7 @@ if [ "$color_prompt" = yes ]; then
 	ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]=standout
 fi
 else
-    PROMPT='%n@%m:%~%# '
+    PROMPT=$'┌──$(conda_env)─(%n@%m)─$(git_branch_name)─[(6~.%-1~/…/%4~.%5~)]\n└──%B%(#.)'
 fi
 unset color_prompt force_color_prompt
 
@@ -227,11 +236,15 @@ else
     fi
 fi
 unset __conda_setup
+
+if [ -f "/home/kshmr/miniforge3/etc/profile.d/mamba.sh" ]; then
+    . "/home/kshmr/miniforge3/etc/profile.d/mamba.sh"
+fi
 # <<< conda initialize <<<
 
 
 
-export PATH=/home/kshmr/.local/bin:$PATH
+export PATH=/home/zare/.local/bin/dwmblocks:/home/zare/.local/bin:$PATH
 export JAVA_HOME=/usr/lib/jvm/bellsoft-java8-full-amd64
 
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
