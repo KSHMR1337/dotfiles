@@ -35,6 +35,16 @@ compinit -d ~/.cache/zcompdump
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # case insensitive tab completion
 
+# set environment variables
+export PATH=/home/zare/.local/bin/dwmblocks:/home/zare/.local/bin:$PATH
+export JAVA_HOME=/usr/lib/jvm/bellsoft-java8-full-amd64
+
+# source required files
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/nvm/init-nvm.sh
+source <(fzf --zsh)
+
 # History configurations
 HISTFILE=~/.zsh_history
 HISTSIZE=1000
@@ -215,6 +225,7 @@ alias la='ls -A'
 alias l='ls -CF'
 alias vol3='vol'
 alias vol2='vol.py'
+alias ctfvm='VirtualBoxVM --startvm "ctfvm" &'
 #enable auto-suggestions based on the history
 if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
    . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -241,14 +252,6 @@ if [ -f "/home/kshmr/miniforge3/etc/profile.d/mamba.sh" ]; then
     . "/home/kshmr/miniforge3/etc/profile.d/mamba.sh"
 fi
 # <<< conda initialize <<<
-
-
-
-export PATH=/home/zare/.local/bin/dwmblocks:/home/zare/.local/bin:$PATH
-export JAVA_HOME=/usr/lib/jvm/bellsoft-java8-full-amd64
-
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 
 
