@@ -14,6 +14,7 @@ cd forsetup || exit
 
 git clone https://github.com/KSHMR1337/dwm
 cd dwm || exit
+git checkout red
 sudo make clean install
 cd ..
 git clone https://github.com/KSHMR1337/dmenu
@@ -22,6 +23,7 @@ sudo make clean install
 cd ..
 git clone https://github.com/KSHMR1337/st
 cd st || exit
+git checkout red
 sudo make clean install
 cd ..
 git clone https://github.com/KSHMR1337/dwmblocks
@@ -60,6 +62,9 @@ sudo cp ./.config/x11/start_dwm.sh /usr/local/bin
 # Configure zsh
 sudo cp ./.config/zsh/.* ~
 
+# Configure nvim
+cd ./.config/nvim || exit
+git checkout red
 
 # Reboot
 sudo reboot
