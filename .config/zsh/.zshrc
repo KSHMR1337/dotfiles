@@ -9,7 +9,7 @@ setopt nonomatch           # hide error message if there is no match for the pat
 setopt notify              # report the status of background jobs immediately
 setopt numericglobsort     # sort filenames numerically when it makes sense
 setopt promptsubst         # enable command substitution in prompt
-
+setopt prompt_subst        # Allow substitutions and expansions in the prompt
 
 WORDCHARS=${WORDCHARS//\/} # Don't consider certain characters part of the word
 
@@ -35,15 +35,38 @@ compinit -d ~/.cache/zcompdump
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # case insensitive tab completion
 
-# set environment variables
-export PATH=/home/kshmr/.local/bin/dwmblocks:/home/kshmr/.local/bin:$PATH
-export JAVA_HOME=/usr/lib/jvm/bellsoft-java8-full-amd64
-
 # source required files
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/nvm/init-nvm.sh
 source <(fzf --zsh)
+
+# Use neovim for vim if present.
+[ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"
+
+# Use $XINITRC variable if file exists.
+[ -f "$XINITRC" ] && alias startx="startx $XINITRC"
+
+# sudo not required for some system commands
+for command in mount umount pacman su shutdown poweroff reboot ; do
+	alias $command="sudo $command"
+done; unset command
+
+# Aliases set up
+
+alias \
+    ls="ls -hN --group-directories-first" \
+    ll='ls -l' \
+    la='ls -A' \
+    l='ls -CF' \
+    vol3='vol' \
+    vol2='vol.py' \
+    rmdir='rm -rf' \
+    mkd='mkdir -pv' \
+    cp="cp -iv" \
+	mv="mv -iv" \
+	rm="rm -vI" \
+	bc="bc -ql" \
 
 # History configurations
 HISTFILE=~/.zsh_history
@@ -82,6 +105,8 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+# Add current conda environtment to the prompt
+
 function conda_env()
 {
     if [[ -n $CONDA_PREFIX ]]
@@ -98,6 +123,8 @@ function conda_env()
     fi
 }    
 
+# Add name of the current git branch to the prompt
+
 function git_branch_name()
 {
   branch=$(git symbolic-ref HEAD 2> /dev/null | awk 'BEGIN{FS="/"} {print $NF}')
@@ -108,10 +135,6 @@ function git_branch_name()
       echo '('$branch')'
   fi
 }
-
-
-# Allow substitutions and expansions in the prompt
-setopt prompt_subst
 
 
 if [ "$color_prompt" = yes ]; then
@@ -197,7 +220,7 @@ precmd() {
 # enable color support of ls, less and man, and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
+    alias ls="ls -hN --color=auto --group-directories-first" 
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
@@ -219,20 +242,12 @@ if [ -x /usr/bin/dircolors ]; then
     zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 fi
 
-# some more ls aliases
-alias ll='ls -l'
-alias la='ls -A'
-alias l='ls -CF'
-alias vol3='vol'
-alias vol2='vol.py'
-alias ctfvm='VirtualBoxVM --startvm "ctfvm" &'
 #enable auto-suggestions based on the history
 if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
    . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
     # change suggestion color
    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
 fi
-
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -252,6 +267,3 @@ if [ -f "/home/kshmr/miniforge3/etc/profile.d/mamba.sh" ]; then
     . "/home/kshmr/miniforge3/etc/profile.d/mamba.sh"
 fi
 # <<< conda initialize <<<
-
-
-
