@@ -36,7 +36,7 @@ zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # case insensitive tab completion
 
 # set environment variables
-export PATH=/home/zare/.local/bin/dwmblocks:/home/zare/.local/bin:$PATH
+export PATH=/home/kshmr/.local/bin/dwmblocks:/home/kshmr/.local/bin:$PATH
 export JAVA_HOME=/usr/lib/jvm/bellsoft-java8-full-amd64
 
 # source required files
