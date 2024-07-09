@@ -13,7 +13,7 @@ sudo cp ./.config/zsh/.* ~
 
 # Copy configurations
 echo "Copying configurations"
-if [ ! -d "~/.config"]; then
+if [ ! -d "~/.config" ]; then
 	mkdir ~/.config
 fi
 cd ./.config/nvim || exit
@@ -100,18 +100,18 @@ cd ../../
 
 # Configure plymouth
 echo "Configuring plymouth"
-if [ ! -d "/etc/plymouth"]; then
+if [ ! -d "/etc/plymouth" ]; then
 	sudo mkdir /etc/plymouth
 fi
 sudo cp ./.config/plymouth/plymouthd.conf /etc/plymouth/
-if [ ! -d "/usr/share/plymouth"]; then
+if [ ! -d "/usr/share/plymouth" ]; then
 	sudo mkdir /usr/share/plymouth
 fi
 sudo cp -r ./.config/plymouth/themes /usr/share/plymouth/
 
 # Configure sddm
 echo "Configuring sddm"
-if [ ! -d "/usr/share/sddm"]; then
+if [ ! -d "/usr/share/sddm" ]; then
 	sudo mkdir /usr/share/sddm
 fi
 sudo cp ./.config/sddm/sddm.conf /etc/
@@ -121,7 +121,7 @@ sudo systemctl enable sddm.service
 
 # Configure dwm session for sddm
 echo "Configuring dwm startup"
-if [ ! -d "/usr/share/xsessions"]; then
+if [ ! -d "/usr/share/xsessions" ]; then
 	exit 1
 fi
 sudo cp ./.config/x11/dwm.desktop /usr/share/xsessions
