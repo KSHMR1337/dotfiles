@@ -4,24 +4,26 @@
 
 sudo pacman --needed --noconfirm -Syu \
 archlinux-keyring base-devel fzf \
-git htop libxft maim man-db man-pages mpv neofetch neovim npm openssh \
-picom plymouth pulseaudio sddm xclip xorg-server xorg-xinit xwallpaper zsh || exit
+git htop imlib2 libxft maim man-db man-pages mpv neofetch neovim npm openssh \
+picom plymouth pulseaudio sddm xorg-apps xclip xorg-server xorg-xinit xwallpaper zsh || exit
 
 # Configure zsh
 echo "Configuring zsh"
 sudo cp ./.config/zsh/.* ~
 
-# Configure nvim
-echo "Configuring neovim"
+# Copy configurations
+echo "Copying configurations"
 if [ ! -d "~/.config"]; then
 	mkdir ~/.config
 fi
 cd ./.config/nvim || exit
 git checkout purple
-cp -r ../nvim ~/.config
+cd ../..
+cp -r ./.config ~
 
-
-
+# Copy scripts
+echo "Copying scripts"
+cp -r ./.local ~
 
 # My git repos
 echo "Cloning github repositories"
@@ -33,14 +35,14 @@ cd forsetup || exit
 echo "Installing yay"
 git clone https://aur.archlinux.org/yay.git
 cd yay || exit
-makepkg -si
+makepkg -si --noconfirm
 cd ..
 
 #Installing GRUB theme
 echo "Installing GRUB theme"
 git clone https://aur.archlinux.org/grub-theme-cyberre.git
 cd grub-theme-cyberre || exit
-makepkg -si
+makepkg -si --noconfirm
 cd ..
 
 #Installing dwm
