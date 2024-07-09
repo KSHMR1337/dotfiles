@@ -5,7 +5,7 @@
 sudo pacman --noconfirm -Syu \
 archlinux-keyring archlinux-mirrorlist fzf\
 git htop libxft maim man-db man-pages mpv neofetch neovim npm openssh \
-picom plymouth pulseaudio xclip xorg-server xorg-xinit xwallpaper yay zsh || exit
+picom plymouth pulseaudio xclip xorg-server xorg-xinit xwallpaper zsh || exit
 
 # My git repos
 cd || exit
