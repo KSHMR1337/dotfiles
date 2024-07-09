@@ -2,10 +2,10 @@
 
 ## setup script for dwm with my dotfiles
 
-sudo pacman --noconfirm -Syu \
-archlinux-keyring archlinux-mirrorlist fzf\
+sudo pacman --needed --noconfirm -Syu \
+archlinux-keyring base-devel fzf \
 git htop libxft maim man-db man-pages mpv neofetch neovim npm openssh \
-picom plymouth pulseaudio xclip xorg-server xorg-xinit xwallpaper zsh || exit
+picom plymouth pulseaudio sddm xclip xorg-server xorg-xinit xwallpaper zsh || exit
 
 # Configure zsh
 echo "Configuring zsh"
@@ -20,11 +20,28 @@ cd ./.config/nvim || exit
 git checkout purple
 cp -r ../nvim ~/.config
 
+
+
+
 # My git repos
 echo "Cloning github repositories"
 cd || exit
 mkdir -p forsetup
 cd forsetup || exit
+
+#Installing yay
+echo "Installing yay"
+git clone https://aur.archlinux.org/yay.git
+cd yay || exit
+makepkg -si
+cd ..
+
+#Installing GRUB theme
+echo "Installing GRUB theme"
+git clone https://aur.archlinux.org/grub-theme-cyberre.git
+cd grub-theme-cyberre || exit
+makepkg -si
+cd ..
 
 #Installing dwm
 echo "Installing dwm"
@@ -98,6 +115,7 @@ fi
 sudo cp ./.config/sddm/sddm.conf /etc/
 sudo cp -r ./.config/sddm/scripts /usr/share/sddm/
 sudo cp -r ./.config/sddm/themes /usr/share/sddm/
+sudo systemctl enable sddm.service
 
 # Configure dwm session for sddm
 echo "Configuring dwm startup"
@@ -111,4 +129,4 @@ echo "Configured dwm"
 
 
 # Reboot
-sudo reboot
+#sudo reboot
