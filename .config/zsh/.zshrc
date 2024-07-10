@@ -42,7 +42,6 @@ export JAVA_HOME=/usr/lib/jvm/bellsoft-java8-full-amd64
 # source required files
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/nvm/init-nvm.sh
 source <(fzf --zsh)
 
 # History configurations
