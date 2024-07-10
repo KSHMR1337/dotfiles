@@ -5,7 +5,7 @@
 sudo pacman --needed --noconfirm -Syu \
 archlinux-keyring base-devel fzf \
 git htop imlib2 libxft maim man-db man-pages mpd mpv neofetch neovim npm openssh \
-picom plymouth pulseaudio qt5-base sddm xorg-apps xclip xorg-server xorg-xinit xwallpaper zsh zsh-autosuggestions zsh-syntax-highlighting || exit
+picom plasma-framework5 plymouth pulseaudio qt5-base qt5-quickcontrols qt5-quickcontrols2 qt5-graphicaleffects qt5-svg sddm xorg-apps xclip xorg-server xorg-xinit xwallpaper zsh zsh-autosuggestions zsh-syntax-highlighting || exit
 
 # Configure zsh
 echo "Configuring zsh"
