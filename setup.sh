@@ -121,13 +121,54 @@ sudo systemctl enable sddm.service
 # Configure dwm session for sddm
 echo "Configuring dwm startup"
 if [ ! -d "/usr/share/xsessions" ]; then
-	exit 1
+	sudo mkdir /usr/share/xsessions
 fi
 sudo cp ./.config/x11/dwm.desktop /usr/share/xsessions
 sudo cp ./.config/x11/start_dwm.sh /usr/local/bin
 echo "Configured dwm"
 
+#Configuring picom
+echo "Configuring picom"
+if [ ! -d "/etc/xdg" ]; then
+	sudo mkdir /etc/xdg
+fi
+sudo cp ./.config/picom/picom.conf /etc/xdg
 
+# Configure GRUB Theme
+
+# Create themes directory if not exists
+prompt -i "\nChecking directory...\n"
+[[ -d /boot/grub/themes/CyberRe ]] && rm -rf /boot/grub/themes/CyberRe
+mkdir -p "/boot/grub/themes/CyberRe"
+
+# Copy theme
+prompt -i "\nInstalling theme...\n"
+
+cp -a /usr/share/grub/themes/CyberRe/* /boot/grub/themes/CyberRe
+
+# Set theme
+prompt -i "\nSetting the theme as main...\n"
+
+# Backup grub config
+cp -an /etc/default/grub /etc/default/grub.bak
+
+grep "GRUB_THEME=" /etc/default/grub 2>&1 >/dev/null && sed -i '/GRUB_THEME=/d' /etc/default/grub
+
+echo "GRUB_THEME=\"/boot/grub/themes/CyberRe/theme.txt\"" >> /etc/default/grub
+
+# Update grub config
+echo -e "Updating grub..."
+if has_command update-grub; then
+  update-grub
+elif has_command grub-mkconfig; then
+  grub-mkconfig -o /boot/grub/grub.cfg
+elif has_command grub2-mkconfig; then
+  if has_command zypper; then
+    grub2-mkconfig -o /boot/grub2/grub.cfg
+  elif has_command dnf; then
+    grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
+  fi
+fi
 
 # Reboot
 #sudo reboot
