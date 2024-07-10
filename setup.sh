@@ -138,28 +138,28 @@ sudo cp ./.config/picom/picom.conf /etc/xdg
 
 # Create themes directory if not exists
 echo "\nChecking directory...\n"
-[[ -d /boot/grub/themes/CyberRe ]] && rm -rf /boot/grub/themes/CyberRe
-mkdir -p "/boot/grub/themes/CyberRe"
+[[ -d /boot/grub/themes/CyberRe ]] && sudo rm -rf /boot/grub/themes/CyberRe
+sudo mkdir -p "/boot/grub/themes/CyberRe"
 
 # Copy theme
 echo "\nInstalling theme...\n"
 
-cp -a /usr/share/grub/themes/CyberRe/* /boot/grub/themes/CyberRe
+sudo cp -a /usr/share/grub/themes/CyberRe/* /boot/grub/themes/CyberRe
 
 # Set theme
-echo "\nSetting the theme as main...\n"
+sudo echo "\nSetting the theme as main...\n"
 
 # Backup grub config
-cp -an /etc/default/grub /etc/default/grub.bak
+sudo cp -an /etc/default/grub /etc/default/grub.bak
 
-grep "GRUB_THEME=" /etc/default/grub 2>&1 >/dev/null && sed -i '/GRUB_THEME=/d' /etc/default/grub
+sudo grep "GRUB_THEME=" /etc/default/grub 2>&1 >/dev/null && sudo sed -i '/GRUB_THEME=/d' /etc/default/grub
 
-echo "GRUB_THEME=\"/boot/grub/themes/CyberRe/theme.txt\"" >> /etc/default/grub
+sudo echo "GRUB_THEME=\"/boot/grub/themes/CyberRe/theme.txt\"" >> /etc/default/grub
 
 # Update grub config
 echo "Updating grub..."
 
-grub-mkconfig -o /boot/grub/grub.cfg
+sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 # Reboot
 #sudo reboot
