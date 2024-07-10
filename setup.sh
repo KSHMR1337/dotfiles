@@ -137,17 +137,17 @@ sudo cp ./.config/picom/picom.conf /etc/xdg
 # Configure GRUB Theme
 
 # Create themes directory if not exists
-prompt -i "\nChecking directory...\n"
+echo "\nChecking directory...\n"
 [[ -d /boot/grub/themes/CyberRe ]] && rm -rf /boot/grub/themes/CyberRe
 mkdir -p "/boot/grub/themes/CyberRe"
 
 # Copy theme
-prompt -i "\nInstalling theme...\n"
+echo "\nInstalling theme...\n"
 
 cp -a /usr/share/grub/themes/CyberRe/* /boot/grub/themes/CyberRe
 
 # Set theme
-prompt -i "\nSetting the theme as main...\n"
+echo "\nSetting the theme as main...\n"
 
 # Backup grub config
 cp -an /etc/default/grub /etc/default/grub.bak
@@ -157,18 +157,9 @@ grep "GRUB_THEME=" /etc/default/grub 2>&1 >/dev/null && sed -i '/GRUB_THEME=/d' 
 echo "GRUB_THEME=\"/boot/grub/themes/CyberRe/theme.txt\"" >> /etc/default/grub
 
 # Update grub config
-echo -e "Updating grub..."
-if has_command update-grub; then
-  update-grub
-elif has_command grub-mkconfig; then
-  grub-mkconfig -o /boot/grub/grub.cfg
-elif has_command grub2-mkconfig; then
-  if has_command zypper; then
-    grub2-mkconfig -o /boot/grub2/grub.cfg
-  elif has_command dnf; then
-    grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
-  fi
-fi
+echo "Updating grub..."
+
+grub-mkconfig -o /boot/grub/grub.cfg
 
 # Reboot
 #sudo reboot
