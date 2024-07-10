@@ -115,7 +115,6 @@ if [ ! -d "/usr/share/sddm" ]; then
 	sudo mkdir /usr/share/sddm
 fi
 sudo cp ./.config/sddm/sddm.conf /etc/
-sudo cp -r ./.config/sddm/scripts /usr/share/sddm/
 sudo cp -r ./.config/sddm/themes /usr/share/sddm/
 sudo systemctl enable sddm.service
 
