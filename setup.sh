@@ -4,8 +4,8 @@
 
 sudo pacman --needed --noconfirm -Syu \
 archlinux-keyring base-devel fzf \
-git htop imlib2 libxft maim man-db man-pages mpv neofetch neovim npm openssh \
-picom plymouth pulseaudio sddm xorg-apps xclip xorg-server xorg-xinit xwallpaper zsh || exit
+git htop imlib2 libxft maim man-db man-pages mpd mpv neofetch neovim npm openssh \
+picom plymouth pulseaudio qt5-base sddm xorg-apps xclip xorg-server xorg-xinit xwallpaper zsh || exit
 
 # Configure zsh
 echo "Configuring zsh"
