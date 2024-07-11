@@ -3,9 +3,9 @@
 ## setup script for dwm with my dotfiles
 
 sudo pacman --needed --noconfirm -Syu \
-archlinux-keyring base-devel fzf git htop imlib2 libxft maim \
-man-db man-pages mpd mpv neofetch neovim npm openssh \
-picom plasma-framework5 plymouth pulseaudio qt5-base qt5-quickcontrols \
+archlinux-keyring alsa-utils base-devel fzf git github-cli htop imlib2 libxft maim \
+man-db man-pages mpd mpv neofetch neovim npm openssh pamixer pavucontrol \
+picom plasma-framework5 plymouth pulseaudio pulseaudio-alsa qt5-base qt5-quickcontrols \
 qt5-quickcontrols2 qt5-graphicaleffects qt5-svg rsync sddm xorg-apps xclip \
 xorg-server xorg-xinit xwallpaper zsh zsh-autosuggestions zsh-syntax-highlighting > ~/install.log 2>&1  || exit
 
