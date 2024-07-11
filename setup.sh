@@ -6,7 +6,7 @@ sudo pacman --needed --noconfirm -Syu \
 archlinux-keyring base-devel fzf git htop imlib2 libxft maim \
 man-db man-pages mpd mpv neofetch neovim npm openssh \
 picom plasma-framework5 plymouth pulseaudio qt5-base qt5-quickcontrols \
-qt5-quickcontrols2 qt5-graphicaleffects qt5-svg sddm xorg-apps xclip \
+qt5-quickcontrols2 qt5-graphicaleffects qt5-svg rsync sddm xorg-apps xclip \
 xorg-server xorg-xinit xwallpaper zsh zsh-autosuggestions zsh-syntax-highlighting > ~/install.log 2>&1  || exit
 
 # Configure zsh
@@ -14,18 +14,14 @@ echo "Configuring zsh"
 sudo cp ./.config/zsh/.* ~
 
 # Copy configurations
-echo "Copying configurations"
-if [ ! -d "~/.config" ]; then
+echo "Copying configurations and scripts"
+if [ ! -d ~/.config ]; then
 	mkdir ~/.config
 fi
 cd ./.config/nvim || exit
 git checkout purple >> ~/install.log 2>&1  
 cd ../..
-cp -r ./{.config,.icons,.local,.themes} ~
-
-# Copy scripts
-echo "Copying scripts"
-cp -r ./.local ~
+cp -rf ./{.config,.icons,.local,.themes} ~
 
 # My git repos
 echo "Cloning github repositories"
@@ -156,7 +152,7 @@ sudo cp -an /etc/default/grub /etc/default/grub.bak
 
 grep "GRUB_THEME=" /etc/default/grub 2>&1 >/dev/null && sudo sed -i '/GRUB_THEME=/d' /etc/default/grub
 
-echo "GRUB_THEME=\"/boot/grub/themes/CyberRe/theme.txt\"" > /dev/null 2>&1  | sudo tee -a /etc/default/grub
+echo 'GRUB_THEME="/boot/grub/themes/CyberRe/theme.txt"'  | sudo tee -a /etc/default/grub > /dev/null
 
 # Update grub config
 echo "Updating grub..."
