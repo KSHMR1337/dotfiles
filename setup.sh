@@ -3,9 +3,11 @@
 ## setup script for dwm with my dotfiles
 
 sudo pacman --needed --noconfirm -Syu \
-archlinux-keyring base-devel fzf \
-git htop imlib2 libxft maim man-db man-pages mpd mpv neofetch neovim npm openssh \
-picom plasma-framework5 plymouth pulseaudio qt5-base qt5-quickcontrols qt5-quickcontrols2 qt5-graphicaleffects qt5-svg sddm xorg-apps xclip xorg-server xorg-xinit xwallpaper zsh zsh-autosuggestions zsh-syntax-highlighting || exit
+archlinux-keyring base-devel fzf git htop imlib2 libxft maim \
+man-db man-pages mpd mpv neofetch neovim npm openssh \
+picom plasma-framework5 plymouth pulseaudio qt5-base qt5-quickcontrols \
+qt5-quickcontrols2 qt5-graphicaleffects qt5-svg sddm xorg-apps xclip \
+xorg-server xorg-xinit xwallpaper zsh zsh-autosuggestions zsh-syntax-highlighting > ~/install.log 2>&1  || exit
 
 # Configure zsh
 echo "Configuring zsh"
@@ -17,9 +19,9 @@ if [ ! -d "~/.config" ]; then
 	mkdir ~/.config
 fi
 cd ./.config/nvim || exit
-git checkout purple
+git checkout purple >> ~/install.log 2>&1  
 cd ../..
-cp -r ./.config ~
+cp -r ./{.config,.icons,.local,.themes} ~
 
 # Copy scripts
 echo "Copying scripts"
@@ -33,69 +35,69 @@ cd forsetup || exit
 
 #Installing yay
 echo "Installing yay"
-git clone https://aur.archlinux.org/yay.git
+git clone https://aur.archlinux.org/yay.git >> ~/install.log 2>&1  
 cd yay || exit
-makepkg -si --noconfirm
+makepkg -si --noconfirm >> ~/install.log 2>&1  
 cd ..
 
 #Installing GRUB theme
 echo "Installing GRUB theme"
-git clone https://aur.archlinux.org/grub-theme-cyberre.git
+git clone https://aur.archlinux.org/grub-theme-cyberre.git >> ~/install.log 2>&1  
 cd grub-theme-cyberre || exit
-makepkg -si --noconfirm
+makepkg -si --noconfirm >> ~/install.log 2>&1  
 cd ..
 
 #Installing dwm
 echo "Installing dwm"
-git clone https://github.com/KSHMR1337/dwm
+git clone https://github.com/KSHMR1337/dwm >> ~/install.log 2>&1  
 cd dwm || exit
-git checkout purple
-sudo make clean install
+git checkout purple >> ~/install.log 2>&1  
+sudo make clean install >> ~/install.log 2>&1  
 cd ..
 
 #Installing dmenu
 echo "Installing dmenu"
-git clone https://github.com/KSHMR1337/dmenu
+git clone https://github.com/KSHMR1337/dmenu >> ~/install.log 2>&1  
 cd dmenu || exit
-sudo make clean install
+sudo make clean install >> ~/install.log 2>&1  
 cd ..
 
 #Installing st
 echo "Installing st"
-git clone https://github.com/KSHMR1337/st
+git clone https://github.com/KSHMR1337/st >> ~/install.log 2>&1  
 cd st || exit
-git checkout purple
-sudo make clean install
+git checkout purple >> ~/install.log 2>&1  
+sudo make clean install >> ~/install.log 2>&1  
 cd ..
 
 #Installing dwmblocks
 echo "Installing dwmblocks"
-git clone https://github.com/KSHMR1337/dwmblocks
+git clone https://github.com/KSHMR1337/dwmblocks >> ~/install.log 2>&1  
 cd dwmblocks || exit
-sudo make clean install
+sudo make clean install >> ~/install.log 2>&1  
 cd ..
 
 #Installing slock
 echo "Installing slock"
-git clone https://github.com/KSHMR1337/slock
+git clone https://github.com/KSHMR1337/slock >> ~/install.log 2>&1  
 cd slock || exit
-sudo make clean install
+sudo make clean install >> ~/install.log 2>&1  
 cd ..
 
 #Installing tabbed
 echo "Installing tabbed"
-git clone https://github.com/KSHMR1337/tabbed
+git clone https://github.com/KSHMR1337/tabbed >> ~/install.log 2>&1  
 cd tabbed || exit
-sudo make clean install
+sudo make clean install >> ~/install.log 2>&1  
 cd ..
 
 #Installing xwinwrap
 echo "Installing xwinwrap"
-git clone https://github.com/ujjwal96/xwinwrap
+git clone https://github.com/ujjwal96/xwinwrap >> ~/install.log 2>&1  
 cd xwinwrap || exit
-sudo make
-sudo make install
-make clean
+sudo make >> ~/install.log 2>&1  
+sudo make install >> ~/install.log 2>&1  
+make clean >> ~/install.log 2>&1  
 cd ../../
 
 # Configure plymouth
@@ -116,7 +118,7 @@ if [ ! -d "/usr/share/sddm" ]; then
 fi
 sudo cp ./.config/sddm/sddm.conf /etc/
 sudo cp -r ./.config/sddm/themes /usr/share/sddm/
-sudo systemctl enable sddm.service
+sudo systemctl enable sddm.service >> ~/install.log 2>&1  
 
 # Configure dwm session for sddm
 echo "Configuring dwm startup"
@@ -137,29 +139,31 @@ sudo cp ./.config/picom/picom.conf /etc/xdg
 # Configure GRUB Theme
 
 # Create themes directory if not exists
-echo "\nChecking directory...\n"
+echo "Checking directory..."
 [[ -d /boot/grub/themes/CyberRe ]] && sudo rm -rf /boot/grub/themes/CyberRe
 sudo mkdir -p "/boot/grub/themes/CyberRe"
 
 # Copy theme
-echo "\nInstalling theme...\n"
+echo "Installing theme..."
 
 sudo cp -a /usr/share/grub/themes/CyberRe/* /boot/grub/themes/CyberRe
 
 # Set theme
-sudo echo "\nSetting the theme as main...\n"
+echo "Setting the theme as main..."
 
 # Backup grub config
 sudo cp -an /etc/default/grub /etc/default/grub.bak
 
-sudo grep "GRUB_THEME=" /etc/default/grub 2>&1 >/dev/null && sudo sed -i '/GRUB_THEME=/d' /etc/default/grub
+grep "GRUB_THEME=" /etc/default/grub 2>&1 >/dev/null && sudo sed -i '/GRUB_THEME=/d' /etc/default/grub
 
-sudo echo "GRUB_THEME=\"/boot/grub/themes/CyberRe/theme.txt\"" >> /etc/default/grub
+echo "GRUB_THEME=\"/boot/grub/themes/CyberRe/theme.txt\"" > /dev/null 2>&1  | sudo tee -a /etc/default/grub
 
 # Update grub config
 echo "Updating grub..."
 
-sudo grub-mkconfig -o /boot/grub/grub.cfg
+sudo grub-mkconfig -o /boot/grub/grub.cfg >> ~/install.log 2>&1  
+
+echo "Installation finished successfully!"
 
 # Reboot
 #sudo reboot

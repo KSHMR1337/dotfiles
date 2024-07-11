@@ -2,7 +2,7 @@
 
 /home/zare/.local/bin/setbg & 
 mpd &
-picom --backend glx &
+picom &
 dwmblocks & 
 exec dwm
 
