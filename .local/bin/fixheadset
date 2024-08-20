@@ -1,4 +1,0 @@
-#!/bin/bash
-
-pactl set-card-profile bluez_card.88_C9_E8_AD_13_2B handsfree_head_unit
-
