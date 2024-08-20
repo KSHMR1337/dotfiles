@@ -94,6 +94,15 @@ cd xwinwrap || exit
 sudo make >> ~/install.log 2>&1  
 sudo make install >> ~/install.log 2>&1  
 make clean >> ~/install.log 2>&1  
+cd ..
+
+#Installing paperview
+echo "Installing paperview"
+git clone https://github.com/KSHMR1337/paperview >> ~/install.log 2>&1  
+cd paperview || exit
+sudo make >> ~/install.log 2>&1  
+sudo make install >> ~/install.log 2>&1  
+make clean >> ~/install.log 2>&1  
 cd ../../
 
 # Configure plymouth
