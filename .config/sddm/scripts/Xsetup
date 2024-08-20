@@ -3,7 +3,10 @@
 
 xrandr --setprovideroutputsource "AMD Radeon Graphics @ pci:0000:06:00.0" NVIDIA-0 
 xrandr --dpi 75
-xrandr --output eDP-1-0 --mode 1920x1080 --primary  
-xrandr --output DP-2 --right-of eDP-1-0 --mode 1920x1080
-xrandr --output HDMI-0 --left-of eDP-1-0 --mode 1920x1080 
-
+# xrandr --output eDP-1-0 --mode 1920x1080 --primary  
+# xrandr --output DP-2 --right-of eDP-1-0 --mode 1920x1080
+# xrandr --output HDMI-0 --left-of eDP-1-0 --mode 1920x1080 
+xrandr --output eDP-1-0 --off
+xrandr --output DP-0 --mode 2560x1440 --primary
+xrandr --output DP-3 --right-of DP-0 --mode 1920x1080
+xrandr --output HDMI-0 --left-of DP-0 --mode 1920x1080
