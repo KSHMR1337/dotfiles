@@ -1,0 +1,5 @@
+#!/bin/sh
+
+volume=$(pamixer --get-volume-human)
+
+printf "\uf028 %s" "$volume"

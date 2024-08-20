@@ -1,0 +1,5 @@
+#!/bin/sh
+
+brightness=$(xbacklight -get)
+
+printf "\uf5df %d%c" "$brightness" '%'

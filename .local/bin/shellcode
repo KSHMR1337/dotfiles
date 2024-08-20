@@ -1,0 +1,18 @@
+#!/bin/sh
+
+source_file="$1"
+
+if [ "$source_file" = "" ]; then
+	echo "shellcode <source_file>";
+	exit;
+fi
+
+if [ ! -f "$source_file" ]; then
+	echo "source file $source_file does not exist";
+	exit;
+fi
+
+as "$source_file" -o /tmp/execShell && \
+objcopy -j.text -O binary /tmp/execShell /tmp/execShell.bin && \
+hexdump -v -e '"\\""x" 1/1 "%02x" ""' /tmp/execShell.bin && \
+rm -f /tmp/execShell /tmp/execShell.bin
