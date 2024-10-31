@@ -10,6 +10,7 @@ setopt notify              # report the status of background jobs immediately
 setopt numericglobsort     # sort filenames numerically when it makes sense
 setopt promptsubst         # enable command substitution in prompt
 setopt prompt_subst        # Allow substitutions and expansions in the prompt
+force_color_prompt=yes
 
 WORDCHARS=${WORDCHARS//\/} # Don't consider certain characters part of the word
 
@@ -90,10 +91,14 @@ case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
 
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-force_color_prompt=yes
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+    xterm*|rxvt*|st-256color)
+        TERM_TITLE=$'\e]0;%n@$(hostname): $(pwd)\a'
+        ;;
+    *)
+        ;;
+esac
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -114,10 +119,10 @@ function conda_env()
             then
               if [[ $(basename $CONDA_PREFIX) == "miniforge3" ]]; then
                 # Without this, it would display conda version
-                echo "(base)"
+                echo "base"
               else
                 # For all environments that aren't (base)
-                echo '('$(basename $CONDA_PREFIX)')'
+                echo $(basename $CONDA_PREFIX)
               fi
           # When no conda environment is active, don't show anything
     else
@@ -133,7 +138,7 @@ function git_branch_name()
   then
       echo ""
   else
-      echo '('$branch')'
+      echo $branch
   fi
 }
 
@@ -144,12 +149,14 @@ if [ "$color_prompt" = yes ]; then
     zstyle ':completion:*:default' list-colors 'di=38;5;196:ex=38;5;212:fi=38;5;255:ow=38;5;124:ln=38;5;211:so=38;5;197:pi=38;5;125:bd=38;5;161:cd=38;5;210:su=38;5;204:sg=38;5;198'
 
     # Prompt color variable initializations
-    color_commands="%F{#ffffff}"          # color for regular user prompt
-    color_lines="%F{#7a0a0e}"          # color for regular user prompt
-    color_error="%F{red}"                  # color for error prompts
-    color_username="%F{#e391b4}"                  # color for error prompts
-    color_warning="%F{yellow}"             # color for warning messages
-    color_separator="%F{red}"                  # color for error prompts
+    color_commands="%F{#ffb3c1}"          
+    color_lines="%F{#d50032}"          
+    color_error="%F{#c62828}"                  
+    color_username="%F{#ff99aa}"                  
+    color_warning="%F{#ff8f00}"             
+    color_separator="%F{#b71c1c}"                  
+    color_brackets="%F{#c2185b}"                  
+    color_prompt_sign="%F{#c51162}"    
 
     # Syntax-highlighting color variable initializations
     color_unknown="#FFB6C1"
@@ -170,9 +177,12 @@ if [ "$color_prompt" = yes ]; then
     color_reset="%f"
 
     username=$(whoami | tr "[:lower:]" "[:upper:]")
-
-    PROMPT=$'${color_lines}┌──%B${color_commands}$(conda_env)%b${color_lines}─(%B${color_username}${username}${color_separator}@${color_username}%m%b${color_lines})─%B${color_commands}$(git_branch_name)%b${color_lines}─[%B${color_commands}%(6~.%-1~/…/%4~.%5~)%b${color_lines}]\n└──%B%(#.${color_error}#.%F{red}$)%b${color_lines} '
+    
+    # This is backup prompt without the conditionals for brackets arount $conda_env and $branch
+    # PROMPT=$'${color_lines}┌──%B${color_brackets}(${color_commands}$(conda_env)${color_brackets})%b${color_lines}─%B${color_brackets}(${color_username}K5HMЯ${color_separator}@${color_username}%m${color_brackets})%b${color_lines}─%B${color_brackets}(${color_commands}$(git_branch_name)${color_brackets})%b${color_lines}─%B${color_brackets}[${color_commands}%(6~.%-1~/…/%4~.%5~)${color_brackets}]%b${color_lines}\n└──%B%(#.${color_error}#.%F{red}$)%b${color_lines} '
+    PROMPT=$'${color_lines}┌──%B${color_brackets}$( [[ -n "$(conda_env)" ]] && echo "(${color_commands}$(conda_env)${color_brackets})" )%b${color_lines}─%B${color_brackets}(${color_username}K5HMЯ${color_separator}@${color_username}%m${color_brackets})%b${color_lines}─%B${color_brackets}$( [[ -n "$(git_branch_name)" ]] && echo "(${color_commands}$(git_branch_name)${color_brackets})" )%b${color_lines}─%B${color_brackets}[$( [[ -n "%(6~.%-1~/…/%4~.%5~)" ]] && echo "${color_commands}%(6~.%-1~/…/%4~.%5~)" )${color_brackets}]%b${color_lines}\n└──%B%(#.${color_error}#.$color_prompt_sign$)%b${color_lines}'
     RPROMPT=$'%(?.. %? ${color_error}%B⨯%b${color_reset})%(1j. %j ${color_warning}%B⚙%b${color_reset}.)'
+
 
     # Enable syntax-highlighting
     ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
@@ -223,15 +233,6 @@ fi
 unset color_prompt force_color_prompt
 
 
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-    xterm*|rxvt*)
-        TERM_TITLE=$'\e]0;%n@%m: %~\a'
-        ;;
-    *)
-        ;;
-esac
-
 new_line_before_prompt=yes
 
 precmd() {
@@ -252,8 +253,8 @@ precmd() {
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls="ls -hN --color=auto --group-directories-first" 
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
 
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
