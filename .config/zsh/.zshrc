@@ -67,6 +67,7 @@ alias \
 	mv="mv -iv" \
 	rm="rm -vI" \
 	bc="bc -ql" \
+    wireshark="QT_STYLE_OVERRIDE="kvantum-dark" wireshark"
 
 # History configurations
 HISTFILE=~/.zsh_history
@@ -136,73 +137,103 @@ function git_branch_name()
   fi
 }
 
+# Configure colors
 
 if [ "$color_prompt" = yes ]; then
 
-    PROMPT=$'%F{%(#.blue.green)}┌──%B%F{reset}$(conda_env)%b%F{%(#.blue.green)}─(%B%F{%(#.red.blue)}%n@%m%b%F{%(#.blue.green)})─%B%F{reset}$(git_branch_name)%b%F{%(#.blue.green)}─[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]\n└──%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
-    RPROMPT=$'%(?.. %? %F{red}%B⨯%b%F{reset})%(1j. %j %F{yellow}%B⚙%b%F{reset}.)'
-    # enable syntax-highlighting
-    if [ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && [ "$color_prompt" = yes ]; then
-	. /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-	ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
-	ZSH_HIGHLIGHT_STYLES[default]=none
-	ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=white,bold
-	ZSH_HIGHLIGHT_STYLES[reserved-word]=fg=cyan,bold
-	ZSH_HIGHLIGHT_STYLES[suffix-alias]=fg=green,underline
-	ZSH_HIGHLIGHT_STYLES[global-alias]=fg=#9f417b
-	ZSH_HIGHLIGHT_STYLES[precommand]=fg=#ac282b,underline
-	ZSH_HIGHLIGHT_STYLES[commandseparator]=fg=blue,bold
-	ZSH_HIGHLIGHT_STYLES[autodirectory]=fg=green,underline
-	ZSH_HIGHLIGHT_STYLES[path]=underline
-	ZSH_HIGHLIGHT_STYLES[path_pathseparator]=
-	ZSH_HIGHLIGHT_STYLES[path_prefix_pathseparator]=
-	ZSH_HIGHLIGHT_STYLES[globbing]=fg=blue,bold
-	ZSH_HIGHLIGHT_STYLES[history-expansion]=fg=blue,bold
-	ZSH_HIGHLIGHT_STYLES[command-substitution]=none
-	ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter]=fg=#9f417b
-	ZSH_HIGHLIGHT_STYLES[process-substitution]=none
-	ZSH_HIGHLIGHT_STYLES[process-substitution-delimiter]=fg=#9f417b
-	ZSH_HIGHLIGHT_STYLES[single-hyphen-option]=fg=#9f417b
-	ZSH_HIGHLIGHT_STYLES[double-hyphen-option]=fg=#9f417b
-	ZSH_HIGHLIGHT_STYLES[back-quoted-argument]=none
-	ZSH_HIGHLIGHT_STYLES[back-quoted-argument-delimiter]=fg=blue,bold
-	ZSH_HIGHLIGHT_STYLES[single-quoted-argument]=fg=yellow
-	ZSH_HIGHLIGHT_STYLES[double-quoted-argument]=fg=yellow
-	ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]=fg=yellow
-	ZSH_HIGHLIGHT_STYLES[rc-quote]=fg=#9f417b
-	ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]=fg=#9f417b
-	ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]=fg=#9f417b
-	ZSH_HIGHLIGHT_STYLES[back-dollar-quoted-argument]=fg=#9f417b
-	ZSH_HIGHLIGHT_STYLES[assign]=none
-	ZSH_HIGHLIGHT_STYLES[redirection]=fg=blue,bold
-	ZSH_HIGHLIGHT_STYLES[comment]=fg=black,bold
-	ZSH_HIGHLIGHT_STYLES[named-fd]=none
-	ZSH_HIGHLIGHT_STYLES[numeric-fd]=none
-	ZSH_HIGHLIGHT_STYLES[arg0]=fg=#9c9c9c
-	ZSH_HIGHLIGHT_STYLES[bracket-error]=fg=gray,bold
-	ZSH_HIGHLIGHT_STYLES[bracket-level-1]=fg=blue,bold
-	ZSH_HIGHLIGHT_STYLES[bracket-level-2]=fg=green,bold
-	ZSH_HIGHLIGHT_STYLES[bracket-level-3]=fg=magenta,bold
-	ZSH_HIGHLIGHT_STYLES[bracket-level-4]=fg=yellow,bold
-	ZSH_HIGHLIGHT_STYLES[bracket-level-5]=fg=cyan,bold
-	ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]=standout
-fi
+    zstyle ':completion:*:default' list-colors 'di=38;5;196:ex=38;5;212:fi=38;5;255:ow=38;5;124:ln=38;5;211:so=38;5;197:pi=38;5;125:bd=38;5;161:cd=38;5;210:su=38;5;204:sg=38;5;198'
+
+    # Prompt color variable initializations
+    color_commands="%F{#ffffff}"          # color for regular user prompt
+    color_lines="%F{#7a0a0e}"          # color for regular user prompt
+    color_error="%F{red}"                  # color for error prompts
+    color_username="%F{#e391b4}"                  # color for error prompts
+    color_warning="%F{yellow}"             # color for warning messages
+    color_separator="%F{red}"                  # color for error prompts
+
+    # Syntax-highlighting color variable initializations
+    color_unknown="#FFB6C1"
+    color_alias="#FF69B4"
+    color_highlight="#FF69B4"
+    color_underline="#FF0000"
+    color_command_separator="#FF1493"
+    color_comment="#DDA0DD"
+    color_arg0="#FFFFFF"
+    color_bracket_error="#FF0000"
+    color_bracket_level_1="#ff4756"
+    color_bracket_level_2="#FF1493"
+    color_bracket_level_3="#FF69B4"
+    color_bracket_level_4="#FFB6C1"
+    color_bracket_level_5="#FF69B4"
+    color_reserved="#FF1493"
+    color_prompt_root="#FF0000"
+    color_reset="%f"
+
+    username=$(whoami | tr "[:lower:]" "[:upper:]")
+
+    PROMPT=$'${color_lines}┌──%B${color_commands}$(conda_env)%b${color_lines}─(%B${color_username}${username}${color_separator}@${color_username}%m%b${color_lines})─%B${color_commands}$(git_branch_name)%b${color_lines}─[%B${color_commands}%(6~.%-1~/…/%4~.%5~)%b${color_lines}]\n└──%B%(#.${color_error}#.%F{red}$)%b${color_lines} '
+    RPROMPT=$'%(?.. %? ${color_error}%B⨯%b${color_reset})%(1j. %j ${color_warning}%B⚙%b${color_reset}.)'
+
+    # Enable syntax-highlighting
+    ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
+    ZSH_HIGHLIGHT_STYLES[default]=none
+    ZSH_HIGHLIGHT_STYLES[unknown-token]="fg=${color_unknown},bold"
+    ZSH_HIGHLIGHT_STYLES[reserved-word]="fg=${color_reserved},bold"
+    ZSH_HIGHLIGHT_STYLES[suffix-alias]="fg=${color_prompt_root},underline"
+    ZSH_HIGHLIGHT_STYLES[global-alias]="fg=${color_highlight}"
+    ZSH_HIGHLIGHT_STYLES[precommand]="fg=${color_underline},underline"
+    ZSH_HIGHLIGHT_STYLES[commandseparator]="fg=${color_prompt_root},bold"
+    ZSH_HIGHLIGHT_STYLES[autodirectory]="fg=${color_prompt_root},underline"
+    ZSH_HIGHLIGHT_STYLES[path]=underline
+    ZSH_HIGHLIGHT_STYLES[globbing]="fg=${color_prompt_root},bold"
+    ZSH_HIGHLIGHT_STYLES[history-expansion]="fg=${color_prompt_root},bold"
+    ZSH_HIGHLIGHT_STYLES[command-substitution]=none
+    ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter]="fg=${color_highlight}"
+    ZSH_HIGHLIGHT_STYLES[process-substitution]=none
+    ZSH_HIGHLIGHT_STYLES[process-substitution-delimiter]="fg=${color_highlight}"
+    ZSH_HIGHLIGHT_STYLES[single-hyphen-option]="fg=${color_highlight}"
+    ZSH_HIGHLIGHT_STYLES[double-hyphen-option]="fg=${color_highlight}"
+    ZSH_HIGHLIGHT_STYLES[back-quoted-argument]=none
+    ZSH_HIGHLIGHT_STYLES[back-quoted-argument-delimiter]="fg=${color_prompt_root},bold"
+    ZSH_HIGHLIGHT_STYLES[single-quoted-argument]="fg=${color_warning}"
+    ZSH_HIGHLIGHT_STYLES[double-quoted-argument]="fg=${color_warning}"
+    ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]="fg=${color_warning}"
+    ZSH_HIGHLIGHT_STYLES[rc-quote]="fg=${color_highlight}"
+    ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]="fg=${color_highlight}"
+    ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]="fg=${color_highlight}"
+    ZSH_HIGHLIGHT_STYLES[back-dollar-quoted-argument]="fg=${color_highlight}"
+    ZSH_HIGHLIGHT_STYLES[assign]=none
+    ZSH_HIGHLIGHT_STYLES[redirection]="fg=${color_prompt_root},bold"
+    ZSH_HIGHLIGHT_STYLES[comment]="fg=${color_comment},bold"
+    ZSH_HIGHLIGHT_STYLES[named-fd]=none
+    ZSH_HIGHLIGHT_STYLES[numeric-fd]=none
+    ZSH_HIGHLIGHT_STYLES[arg0]="fg=${color_arg0}"
+    ZSH_HIGHLIGHT_STYLES[bracket-error]="fg=${color_bracket_error},bold"
+    ZSH_HIGHLIGHT_STYLES[bracket-level-1]="fg=${color_bracket_level_1},bold"
+    ZSH_HIGHLIGHT_STYLES[bracket-level-2]="fg=${color_bracket_level_2},bold"
+    ZSH_HIGHLIGHT_STYLES[bracket-level-3]="fg=${color_bracket_level_3},bold"
+    ZSH_HIGHLIGHT_STYLES[bracket-level-4]="fg=${color_bracket_level_4},bold"
+    ZSH_HIGHLIGHT_STYLES[bracket-level-5]="fg=${color_bracket_level_5},bold"
+    ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]=standout
+
 else
     PROMPT=$'┌──$(conda_env)─(%n@%m)─$(git_branch_name)─[(6~.%-1~/…/%4~.%5~)]\n└──%B%(#.)'
 fi
+
 unset color_prompt force_color_prompt
 
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
-xterm*|rxvt*)
-    TERM_TITLE=$'\e]0;%n@%m: %~\a'
-    ;;
-*)
-    ;;
+    xterm*|rxvt*)
+        TERM_TITLE=$'\e]0;%n@%m: %~\a'
+        ;;
+    *)
+        ;;
 esac
 
 new_line_before_prompt=yes
+
 precmd() {
     # Print the previously configured title
     print -Pnr -- "$TERM_TITLE"
@@ -243,10 +274,10 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 #enable auto-suggestions based on the history
-if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-   . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+if [ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+   . /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
     # change suggestion color
-   ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
+   ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#f7b0ce'
 fi
 
 # >>> conda initialize >>>
