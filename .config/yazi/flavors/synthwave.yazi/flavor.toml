@@ -1,0 +1,143 @@
+[manager]
+
+cwd = { fg = "#fcf0f6" }
+
+# Hovered
+hovered = { fg = "#000000", bg = "#9b59b6", bold = true }  
+preview_hovered = { underline = true }
+
+# Find
+find_keyword = { fg = "#b77dd0", italic = true }  
+find_position = { fg = "#A020F0", bg = "reset", italic = true }  
+
+# Marker
+marker_selected = { fg = "#ef7dfc", bg = "#c8b6be" }
+marker_copied = { fg = "#9d4789", bg = "#ef7dfc" }
+marker_cut = { fg = "#f9e2af", bg = "#bc95a8" }
+
+# Tab
+tab_active = { fg = "#1e1e2e", bg = "#ecdbe4" }
+tab_inactive = { fg = "#cdd6f4", bg = "#45475a" }
+tab_width = 1
+
+# Border
+border_symbol = "│"
+border_style = { fg = "#9b59b6" }  
+
+# : }}}
+
+# Preview Position
+
+folder_offset = [2, 0, 2, 0]
+preview_offset = [4, 4, 4, 4]
+
+
+# : Status {{{
+
+[status]
+separator_open = ""
+separator_close = ""
+separator_style = { fg = "#A020F0", bg = "#A020F0" }  
+
+# Mode
+mode_normal = { fg = "#131313", bg = "#e8b4fa", bold = true }
+mode_select = { fg = "#131313", bg = "#e8b4fa", bold = true }
+mode_unset = { fg = "#131313", bg = "#e8b4fa", bold = true }
+
+# Progress
+progress_label = { fg = "#ffffff", bold = true }
+progress_normal = { fg = "#b662b9", bg = "#45475a" }
+progress_error = { fg = "#b77dd0", bg = "#45475a" }  
+
+# Permissions
+permissions_t = { fg = "#fcf0f6" }
+permissions_r = { fg = "#fcf0f6" }
+permissions_w = { fg = "#d683c3" }
+permissions_x = { fg = "#d683c3" }
+permissions_s = { fg = "#d683c3" }
+
+# : }}}
+
+
+# : Input {{{
+
+[input]
+border = { fg = "#fcf0f6" }
+title = {}
+value = {}
+selected = { reversed = true }
+
+# : }}}
+
+
+# : Select {{{
+
+[select]
+border = { fg = "#fcf0f6" }
+active = { fg = "#A020F0" }  
+inactive = {}
+
+# : }}}
+
+
+# : Tasks {{{
+
+[tasks]
+border = { fg = "#fcf0f6" }
+title = {}
+hovered = { underline = true }
+
+# : }}}
+
+
+# : Which {{{
+
+[which]
+mask = { bg = "#000000" }
+cand = { fg = "#94e2d5" }
+rest = { fg = "#9399b2" }
+desc = { fg = "#A020F0" }  
+separator = "  "
+separator_style = { fg = "#A020F0" }  
+
+# : }}}
+
+
+# : Help {{{
+
+[help]
+on = { fg = "#ecdbe4" }
+exec = { fg = "#ecdbe4" }
+desc = { fg = "#ecdbe4" }
+hovered = { bg = "#9b59b6", bold = true }  
+footer = { fg = "#131313", bg = "#ce9eb6" }
+
+# : }}}
+
+
+# : File-specific styles {{{
+
+[filetype]
+
+rules = [
+	# Images
+	{ mime = "image/*", fg = "#ecdbe4" },
+
+	# Videos
+	{ mime = "video/*", fg = "#ecdbe4" },
+	{ mime = "audio/*", fg = "#ecdbe4" },
+
+	# Archives
+	{ mime = "application/zip", fg = "#db0fac" },  
+	{ mime = "application/gzip", fg = "#db0fac" },  
+	{ mime = "application/x-tar", fg = "#db0fac" },  
+	{ mime = "application/x-bzip", fg = "#db0fac" },  
+	{ mime = "application/x-bzip2", fg = "#db0fac" },  
+	{ mime = "application/x-7z-compressed", fg = "#db0fac" },  
+	{ mime = "application/x-rar", fg = "#db0fac" },  
+
+	# Fallback
+	{ name = "*", fg = "#d1a9d6" },
+	{ name = "*/", fg = "#dc14cb" },  
+]
+
