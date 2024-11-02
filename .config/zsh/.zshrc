@@ -159,21 +159,22 @@ if [ "$color_prompt" = yes ]; then
     color_prompt_sign="%F{#c51162}"    
 
     # Syntax-highlighting color variable initializations
-    color_unknown="#FFB6C1"
-    color_alias="#FF69B4"
-    color_highlight="#FF69B4"
-    color_underline="#FF0000"
-    color_command_separator="#FF1493"
-    color_comment="#DDA0DD"
-    color_arg0="#FFFFFF"
-    color_bracket_error="#FF0000"
-    color_bracket_level_1="#ff4756"
-    color_bracket_level_2="#FF1493"
-    color_bracket_level_3="#FF69B4"
-    color_bracket_level_4="#FFB6C1"
-    color_bracket_level_5="#FF69B4"
-    color_reserved="#FF1493"
-    color_prompt_root="#FF0000"
+    color_unknown="#ffb3c1"            
+    color_alias="#5D284F"              
+    color_highlight="#5A475F"          
+    color_underline="#9B0830"          
+    color_command_separator="#E2122E"  
+    color_comment="#9B2551"            
+    color_arg0="#bbbbbb"               
+    color_bracket_error="#5D284F"      
+    color_bracket_level_1="#E2122E"    
+    color_bracket_level_2="#5A475F"    
+    color_bracket_level_3="#9B2551"    
+    color_bracket_level_4="#9B0830"    
+    color_bracket_level_5="#E0254C"    
+    color_reserved="#E2122E"           
+    color_prompt_root="#5D284F"        
+    color_warning="#9B0830"            
     color_reset="%f"
 
     username=$(whoami | tr "[:lower:]" "[:upper:]")
@@ -186,24 +187,24 @@ if [ "$color_prompt" = yes ]; then
 
     # Enable syntax-highlighting
     ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
-    ZSH_HIGHLIGHT_STYLES[default]=none
+    ZSH_HIGHLIGHT_STYLES[default]=$color_reset
     ZSH_HIGHLIGHT_STYLES[unknown-token]="fg=${color_unknown},bold"
     ZSH_HIGHLIGHT_STYLES[reserved-word]="fg=${color_reserved},bold"
     ZSH_HIGHLIGHT_STYLES[suffix-alias]="fg=${color_prompt_root},underline"
-    ZSH_HIGHLIGHT_STYLES[global-alias]="fg=${color_highlight}"
+    ZSH_HIGHLIGHT_STYLES[global-alias]="fg=${color_alias}"
     ZSH_HIGHLIGHT_STYLES[precommand]="fg=${color_underline},underline"
-    ZSH_HIGHLIGHT_STYLES[commandseparator]="fg=${color_prompt_root},bold"
+    ZSH_HIGHLIGHT_STYLES[commandseparator]="fg=${color_command_separator},bold"
     ZSH_HIGHLIGHT_STYLES[autodirectory]="fg=${color_prompt_root},underline"
     ZSH_HIGHLIGHT_STYLES[path]=underline
     ZSH_HIGHLIGHT_STYLES[globbing]="fg=${color_prompt_root},bold"
     ZSH_HIGHLIGHT_STYLES[history-expansion]="fg=${color_prompt_root},bold"
-    ZSH_HIGHLIGHT_STYLES[command-substitution]=none
+    ZSH_HIGHLIGHT_STYLES[command-substitution]=$color_reset
     ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter]="fg=${color_highlight}"
-    ZSH_HIGHLIGHT_STYLES[process-substitution]=none
+    ZSH_HIGHLIGHT_STYLES[process-substitution]=$color_reset
     ZSH_HIGHLIGHT_STYLES[process-substitution-delimiter]="fg=${color_highlight}"
     ZSH_HIGHLIGHT_STYLES[single-hyphen-option]="fg=${color_highlight}"
     ZSH_HIGHLIGHT_STYLES[double-hyphen-option]="fg=${color_highlight}"
-    ZSH_HIGHLIGHT_STYLES[back-quoted-argument]=none
+    ZSH_HIGHLIGHT_STYLES[back-quoted-argument]=$color_reset
     ZSH_HIGHLIGHT_STYLES[back-quoted-argument-delimiter]="fg=${color_prompt_root},bold"
     ZSH_HIGHLIGHT_STYLES[single-quoted-argument]="fg=${color_warning}"
     ZSH_HIGHLIGHT_STYLES[double-quoted-argument]="fg=${color_warning}"
@@ -212,11 +213,11 @@ if [ "$color_prompt" = yes ]; then
     ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]="fg=${color_highlight}"
     ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]="fg=${color_highlight}"
     ZSH_HIGHLIGHT_STYLES[back-dollar-quoted-argument]="fg=${color_highlight}"
-    ZSH_HIGHLIGHT_STYLES[assign]=none
+    ZSH_HIGHLIGHT_STYLES[assign]=$color_reset
     ZSH_HIGHLIGHT_STYLES[redirection]="fg=${color_prompt_root},bold"
     ZSH_HIGHLIGHT_STYLES[comment]="fg=${color_comment},bold"
-    ZSH_HIGHLIGHT_STYLES[named-fd]=none
-    ZSH_HIGHLIGHT_STYLES[numeric-fd]=none
+    ZSH_HIGHLIGHT_STYLES[named-fd]=$color_reset
+    ZSH_HIGHLIGHT_STYLES[numeric-fd]=$color_reset
     ZSH_HIGHLIGHT_STYLES[arg0]="fg=${color_arg0}"
     ZSH_HIGHLIGHT_STYLES[bracket-error]="fg=${color_bracket_error},bold"
     ZSH_HIGHLIGHT_STYLES[bracket-level-1]="fg=${color_bracket_level_1},bold"
