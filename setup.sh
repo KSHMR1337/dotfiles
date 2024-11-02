@@ -19,7 +19,7 @@ if [ ! -d ~/.config ]; then
 	mkdir ~/.config
 fi
 cd ./.config/nvim || exit
-git checkout purple >>~/install.log 2>&1
+git checkout red >>~/install.log 2>&1
 cd ../..
 cp -rf ./{.config,.icons,.local,.themes} ~
 
@@ -47,7 +47,7 @@ cd ..
 echo "Installing dwm"
 git clone https://github.com/KSHMR1337/dwm >>~/install.log 2>&1
 cd dwm || exit
-git checkout purple >>~/install.log 2>&1
+git checkout red >>~/install.log 2>&1
 sudo make clean install >>~/install.log 2>&1
 cd ..
 
@@ -62,7 +62,7 @@ cd ..
 echo "Installing st"
 git clone https://github.com/KSHMR1337/st >>~/install.log 2>&1
 cd st || exit
-git checkout purple >>~/install.log 2>&1
+git checkout red >>~/install.log 2>&1
 sudo make clean install >>~/install.log 2>&1
 cd ..
 
