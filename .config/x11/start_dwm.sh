@@ -23,6 +23,5 @@ esac
 mpd &
 picom --no-frame-pacing &
 dwmblocks & 
+dunst &
 exec dwm
-
-
