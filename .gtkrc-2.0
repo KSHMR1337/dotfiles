@@ -3,7 +3,7 @@
 
 include "/home/kshmr/.gtkrc-2.0.mine"
 gtk-theme-name="Material-Black-Cherry"
-gtk-icon-theme-name="Cherry-Numix-2021"
+gtk-icon-theme-name="Daemon-Icons"
 gtk-font-name="Cantarell 11"
 gtk-cursor-theme-name="Adwaita"
 gtk-cursor-theme-size=0

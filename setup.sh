@@ -3,8 +3,8 @@
 ## setup script for dwm with my dotfiles
 
 sudo pacman --needed --noconfirm -Syu \
-	archlinux-keyring alsa-utils base-devel fd ffmpegthumbnailer fzf git github-cli htop imagemagick imlib2 jq \
-	mlibxft maim an-db man-pages mpd mpv neofetch neovim npm openssh p7zip pamixer pavucontrol \
+	archlinux-keyring alsa-utils base-devel dunst fd ffmpegthumbnailer fzf git github-cli htop imagemagick imlib2 jq \
+	lxappearance-gtk3 mlibxft maim an-db man-pages mpd mpv neofetch neovim npm openssh p7zip pamixer pavucontrol \
 	picom plasma-framework5 plymouth poppler pulseaudio pulseaudio-alsa qt5-base qt5-quickcontrols \
 	qt5-quickcontrols2 qt5-graphicaleffects qt5-svg ripgrep rsync sddm xorg-apps xclip \
 	xorg-server xorg-xinit xwallpaper yazi zoxide zsh zsh-autosuggestions zsh-syntax-highlighting >~/install.log 2>&1 || exit
@@ -21,7 +21,7 @@ fi
 cd ./.config/nvim || exit
 git checkout red >>~/install.log 2>&1
 cd ../..
-cp -rf ./{.config,.icons,.local,.themes} ~
+cp -rf ./{.config,.icons,.local,.themes,.gtkrc-2.0} ~
 
 # My git repos
 echo "Cloning github repositories"
