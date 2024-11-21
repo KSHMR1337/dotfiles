@@ -29,3 +29,6 @@ export JAVA_HOME=/usr/lib/jvm/bellsoft-java8-full-amd64
 export PATH="$PATH:/home/kshmr/.foundry/bin"
 
 [ "$(tty)" = "/dev/tty1" ] && ! pidof -s Xorg >/dev/null 2>&1 && exec startx "$XINITRC"
+
+# Setup nvim as manpager
+export MANPAGER='nvim +Man!'
