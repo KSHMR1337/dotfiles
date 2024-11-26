@@ -9,9 +9,9 @@ export PATH="$PATH:${tmp1%%:}"
 export PATH="$PATH:${tmp2%%:}"
 
 # Setup themes
-export GTK_THEME="retrowave-glow"
+export GTK_THEME="retrowave-glow:dark"
 export GTK2_RC_FILES="/usr/share/themes/retrowave-glow/gtk-2.0/gtkrc"
-export QT_STYLE_OVERRIDE="retrowave-glow"
+export QT_STYLE_OVERRIDE="retrowave-glow:dark"
 
 ## mimeapps
 export XDG_UTILS_DEBUG_LEVEL=2
