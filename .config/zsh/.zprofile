@@ -9,9 +9,9 @@ export PATH="$PATH:${tmp1%%:}"
 export PATH="$PATH:${tmp2%%:}"
 
 # Setup themes
-export GTK_THEME=Material-Black-Cherry
-export GTK2_RC_FILES=/usr/share/themes/Material-Black-Cherry/gtk-2.0/gtkrc
-export QT_STYLE_OVERRIDE=Material-Black-Cherry
+export GTK_THEME="Material-Black-Cherry:dark"
+export GTK2_RC_FILES="/usr/share/themes/Material-Black-Cherry/gtk-2.0/gtkrc"
+export QT_STYLE_OVERRIDE="Material-Black-Cherry:dark"
 
 ## mimeapps
 export XDG_UTILS_DEBUG_LEVEL=2
