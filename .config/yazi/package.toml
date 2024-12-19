@@ -1,0 +1,5 @@
+[plugin]
+deps = [{ use = "yazi-rs/plugins:lsar", rev = "7afba3a" }]
+
+[flavor]
+deps = [{ use = "yazi-rs/flavors:catppuccin-mocha", rev = "8458d25" }]

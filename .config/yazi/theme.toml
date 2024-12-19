@@ -8,5 +8,9 @@
 
 [flavor]
 use = "crimson"
+dark = "crimson"
+light = "crimson"
+
 
 # : }}}
+
