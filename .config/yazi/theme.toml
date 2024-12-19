@@ -8,5 +8,7 @@
 
 [flavor]
 use = "synthwave"
+dark = "synthwave"
+light = "synthwave"
 
 # : }}}

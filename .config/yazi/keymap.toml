@@ -15,8 +15,8 @@ keymap = [
 	# Hopping
 	# { on = "k", run = "arrow -1", desc = "Move cursor up" },
 	# { on = "j", run = "arrow 1",  desc = "Move cursor down" },
-    { on = [ "j" ], run = [ "plugin --sync arrow --args=1"],  desc = "Move selection downwards, or wrap." },
-	{ on = [ "k" ], run = [ "plugin --sync arrow --args=-1"], desc = "Move selection upwards, or wrap." },
+    { on = [ "j" ], run = [ "plugin arrow --args=1"],  desc = "Move selection downwards, or wrap." },
+	{ on = [ "k" ], run = [ "plugin arrow --args=-1"], desc = "Move selection upwards, or wrap." },
 
 	{ on = "<Up>",    run = "arrow -1", desc = "Move cursor up" },
 	{ on = "<Down>",  run = "arrow 1",  desc = "Move cursor down" },
@@ -37,7 +37,7 @@ keymap = [
 	# Navigation
 	{ on = "h", run = "leave", desc = "Go back to the parent directory" },
 	# { on = "l", run = "enter", desc = "Enter the child directory" },
-    { on = [ "l" ], run = [ "plugin smart-enter --sync", "escape --visual --select" ], desc = "Enter the child directory, or open file." },
+    { on = [ "l" ], run = [ "plugin smart-enter", "escape --visual --select" ], desc = "Enter the child directory, or open file." },
 
 	{ on = "<Left>",  run = "leave",    desc = "Go back to the parent directory" },
 	{ on = "<Right>", run = "enter",    desc = "Enter the child directory" },
