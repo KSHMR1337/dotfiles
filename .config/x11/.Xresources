@@ -1,0 +1,46 @@
+st.font:			Hack Nerd Font Mono:pixelsize=15:antialias=true:autohint=true
+st.bold_font:			0
+st.termname:			st-256color
+st.shell:			/bin/sh
+st.bellvolume:			100
+st.tabspaces:			8
+st.chscale:			1.0
+st.cwscale:			1.0
+
+
+! special
+st.foreground:   #bbbbbb
+st.background:   #000000
+st.cursorColor:  #bca4dd
+
+! black
+st.color0:       #000000
+st.color8:       #1c1c1c
+
+! red
+st.color1:       #ab153d
+st.color9:       #e01b50
+
+! green
+st.color2:       #31e619
+st.color10:      #31e619
+
+! yellow
+st.color3:       #deba1b
+st.color11:      #deba1b
+
+! blue
+st.color4:       #080d9b
+st.color12:      #161ddb
+
+! magenta
+st.color5:       #cc00cc
+st.color13:      #ff1dce
+
+! cyan
+st.color6:       #08799b
+st.color14:      #56c6e8
+
+! white
+st.color7:       #bbbbbb
+st.color15:      #eeeeee
