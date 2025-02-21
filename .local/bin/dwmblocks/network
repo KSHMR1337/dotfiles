@@ -1,15 +1,8 @@
 #!/bin/sh
 
-# 1 for bytes
-# 0 for bits
 bytes=1
-
-# 1 for kibi, mebi, gibi, tebi, peti
-# 0 for kilo, mega, giga, tera, peta
 kibi=1
 
-
-# where we save data from last sec
 file="/tmp/network"
 if ! [ -f $file ]; then
     echo 0 > $file
@@ -19,12 +12,12 @@ fi
 tx_prev=$(cat $file | sed 1q)
 rx_prev=$(cat $file | sed '2q;d')
 
-if [ -d /sys/class/net/wlan0 ]; then
-	cat /sys/class/net/wlan0/statistics/rx_bytes > $file
-	cat /sys/class/net/wlan0/statistics/tx_bytes >> $file
+if [ -d /sys/class/net/enp5s0 ]; then
+    cat /sys/class/net/enp5s0/statistics/rx_bytes > $file
+    cat /sys/class/net/enp5s0/statistics/tx_bytes >> $file
 else
-	cat /sys/class/net/eth0/statistics/rx_bytes > $file
-	cat /sys/class/net/eth0/statistics/tx_bytes >> $file
+    cat /sys/class/net/wlan0/statistics/rx_bytes > $file
+    cat /sys/class/net/wlan0/statistics/tx_bytes >> $file
 fi
 
 tx_now=$(cat $file | sed 1q)
@@ -32,51 +25,50 @@ rx_now=$(cat $file | sed '2q;d')
 
 bytes_coef=1
 if [ $bytes -eq 0 ]; then
-	bytes_coef=8
+    bytes_coef=8
 fi
 
 kibi_coef=1024
-if [ $bytes -eq 0 ]; then
-	kibi_coef=1000
+if [ $kibi -eq 0 ]; then
+    kibi_coef=1000
 fi
 
-tx_kib=$((bytes_coef*(tx_now-tx_prev)/kibi_coef))
-rx_kib=$((bytes_coef*(rx_now-rx_prev)/kibi_coef))
+tx_diff=$((tx_now - tx_prev))
+rx_diff=$((rx_now - rx_prev))
 
-tx_mib=$((tx_kib/kibi_coef))
-rx_mib=$((rx_kib/kibi_coef))
+tx_kib=$((bytes_coef * tx_diff / kibi_coef))
+rx_kib=$((bytes_coef * rx_diff / kibi_coef))
 
-tx_gib=$((tx_mib/kibi_coef))
-rx_gib=$((rx_mib/kibi_coef))
+tx_mib=$((tx_kib / kibi_coef))
+rx_mib=$((rx_kib / kibi_coef))
+
+tx_gib=$((tx_mib / kibi_coef))
+rx_gib=$((rx_mib / kibi_coef))
 
 bytes_char=B
 if [ $bytes -eq 0 ]; then
-	bytes_char=b
+    bytes_char=b
 fi
 
 kibi_char="i"
 if [ $kibi -eq 0 ]; then
-	kibi_char=""
+    kibi_char=""
 fi
 
-
-
-# download speed
 if [ $tx_gib -ne 0 ]; then
-	printf "%dG" $tx_gib
+    printf "%dG" $tx_gib
 elif [ $tx_mib -ne 0 ]; then
-	printf "%dM" $tx_mib
+    printf "%dM" $tx_mib
 else
-	printf "%dK" $tx_kib
+    printf "%dK" $tx_kib
 fi
 printf "%c%c/s\uf063 " "$kibi_char" $bytes_char
 
-# upload speed
-if [ $tx_gib -ne 0 ]; then
-	printf "%dG" $rx_gib
+if [ $rx_gib -ne 0 ]; then
+    printf "%dG" $rx_gib
 elif [ $rx_mib -ne 0 ]; then
-	printf "%dM" $rx_mib
+    printf "%dM" $rx_mib
 else
-	printf "%dK" $rx_kib
+    printf "%dK" $rx_kib
 fi
 printf "%c%c/s\uf062" "$kibi_char" $bytes_char

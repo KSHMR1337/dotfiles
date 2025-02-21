@@ -1,0 +1,8 @@
+#!/bin/sh
+
+memory_info=$(nvidia-smi --query-gpu=memory.used,memory.total --format=csv,noheader,nounits | awk -F', ' '{print $1 " " $2}')
+
+used_memory=$(echo "$memory_info" | awk '{printf "%.1f", $1/1024}')
+total_memory=$(echo "$memory_info" | awk '{printf "%.1f", $2/1024}')
+
+printf "\u2699 %sG/%sG\n" "$used_memory" "$total_memory"
