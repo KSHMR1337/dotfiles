@@ -1,6 +1,3 @@
-[submodule ".icons/cyberpunk-technotronic-icon-theme"]
-	path = .icons/cyberpunk-technotronic-icon-theme
-	url = https://github.com/dreifacherspass/cyberpunk-technotronic-icon-theme.git
 [submodule ".config/nvim"]
 	path = .config/nvim
 	url = https://github.com/kshmr1337/nvim

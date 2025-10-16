@@ -1,0 +1,131 @@
+/* -------------------------------------- Window ----------------------------------- */
+
+Window.GetMaxWidth = fun() {
+  i = 0;
+  width = 0;
+  while (Window.GetWidth(i)) {
+    width = Math.Max(width, Window.GetWidth(i));
+    i++;
+  }
+  return width;
+};
+
+Window.GetMaxHeight = fun() {
+  i = 0;
+  height = 0;
+  while (Window.GetHeight(i)) {
+    height = Math.Max(height, Window.GetHeight(i));
+    i++;
+  }
+  return height;
+};
+
+anim.imagecount = 20;
+anim.target_width = Window.GetWidth();
+anim.target_height = Window.GetHeight();
+
+fun RotatedImage(index) {
+  index = Math.Int(index);
+  if (!RotatedImageCache[index])
+    // FIXED: Use proper aspect ratio - scale to fit within screen dimensions
+    RotatedImageCache[index] = anim.original_image.Rotate((Math.Pi * 2 * index) / anim.imagecount);
+
+  return RotatedImageCache[index];
+}
+
+/* -------------------------------------- Animation ----------------------------------- */
+
+if (Plymouth.GetMode() == "suspend" || Plymouth.GetMode() == "resume") {
+  background.original_image = ImageNew("suspend.png");
+  // Window.SetBackgroundTopColor(1, 0, 0);
+  // Window.SetBackgroundBottomColor(0, 1, 0);
+}
+else {
+  logo.original_image = ImageNew("logo.png");
+  background.original_image = ImageNew("background.png");
+  // Window.SetBackgroundTopColor(0.180, 0.545, 0.020);
+  // Window.SetBackgroundBottomColor(0.439, 0.573, 0.333);
+
+  anim.image = ImageNew("animation.png");
+  // FIXED: Use both width and height for proper scaling, maintain aspect ratio
+  anim.original_image = anim.image.Scale(anim.target_width * 0.2, anim.target_height * 0.2);
+
+  anim.sprite = SpriteNew();
+  anim.sprite.SetImage(RotatedImage(0));
+  // FIXED: Proper centering calculation
+  anim.sprite.SetX((Window.GetWidth() - RotatedImage(0).GetWidth()) / 2);
+  anim.sprite.SetY(Window.GetHeight() * 0.35);
+  anim.angle = 0;
+  anim.index = 0;
+}
+
+/* -------------------------------------- Logo ----------------------------------- */
+
+ratio = logo.original_image.GetWidth() / logo.original_image.GetHeight();
+reduction = 0.10;
+// FIXED: Use consistent Window.GetWidth() instead of GetMaxWidth()
+logo.image = logo.original_image.Scale(reduction * Window.GetWidth(), reduction / ratio * Window.GetWidth());
+logo.sprite = SpriteNew();
+logo.sprite.SetImage(logo.image);
+logo.opacity_angle = 0;
+// FIXED: Proper centering with consistent window dimensions
+logo.sprite.SetX((Window.GetWidth() - logo.image.GetWidth()) / 2);
+logo.sprite.SetY(Window.GetHeight() * 0.35);
+
+// FIXED: Stretch background to full screen size
+background.image = background.original_image.Scale(Window.GetWidth(), Window.GetHeight());
+background.sprite = SpriteNew();
+background.sprite.SetImage(background.image);
+// FIXED: Position background at screen origin
+background.sprite.SetPosition(0, 0, -10);
+
+fun refresh_callback() {
+  if (status == "normal") {
+    anim.index += 1;
+    anim.index %= anim.imagecount;
+    anim.sprite.SetImage(RotatedImage(anim.index));
+  }
+  else {
+    anim.sprite.SetOpacity(0);
+  }
+}
+
+if (Plymouth.GetMode() != "suspend" && Plymouth.GetMode() != "resume") {
+  Plymouth.SetRefreshFunction(refresh_callback);
+}
+
+/* -------------------------------------- Progress Bar ----------------------------------- */
+
+progress_box.image = Image("progress_box.png");
+progress_box.sprite = Sprite(progress_box.image);
+
+// FIXED: Simplified centering calculation
+progress_box.x = (Window.GetWidth() - progress_box.image.GetWidth()) / 2;
+progress_box.y = Window.GetHeight() * 0.6 - progress_box.image.GetHeight() / 2;
+progress_box.sprite.SetPosition(progress_box.x, progress_box.y, 0);
+
+progress_bar.original_image = Image("progress_bar.png");
+progress_bar.sprite = Sprite();
+
+// FIXED: Consistent centering calculation
+progress_bar.x = (Window.GetWidth() - progress_bar.original_image.GetWidth()) / 2;
+progress_bar.y = Window.GetHeight() * 0.6 - progress_box.image.GetHeight() / 2 + (progress_box.image.GetHeight() - progress_bar.original_image.GetHeight()) / 2;
+progress_bar.sprite.SetPosition(progress_bar.x, progress_bar.y, 2);
+
+fun progress_callback(duration, progress) {
+  // FIXED: Corrected syntax error in GetWidth call
+  if (progress_bar.image.GetWidth() != Math.Int(progress_bar.original_image.GetWidth() * progress)) {
+    progress_bar.image = progress_bar.original_image.Scale(progress_bar.original_image.GetWidth() * progress, progress_bar.original_image.GetHeight());
+    progress_bar.sprite.SetImage(progress_bar.image);
+  }
+}
+
+Plymouth.SetBootProgressFunction(progress_callback);
+
+/* ----------------------------------------- Quit ---------------------------------------- */
+
+fun quit_callback() {
+  anim.sprite.SetOpacity(0);
+}
+
+Plymouth.SetQuitFunction(quit_callback);

@@ -1,0 +1,67 @@
+dwm.normfgcolor:        #bbbbbb
+dwm.normbgcolor:        #0d0303
+dwm.normbordercolor:    #444444
+dwm.selfgcolor:         #eeeeee
+dwm.selbgcolor:         #911d29
+dwm.selbordercolor:     #911d29
+
+dmenu.font:                         Hack Nerd Font Mono:pixelsize=15:antialias=true:autohint=true
+dmenu.background:                   #290407
+dmenu.foreground:                   #bbbbbb 
+dmenu.selbackground :               #911d29
+dmenu.selforeground :               #eeeeee 
+dmenu.normhighlightbackground:      #330000 
+dmenu.normhighlightforeground:      #e01b50
+dmenu.selhighlightbackground:       #222222
+dmenu.selhighlightforeground:       #e01b50
+dmenu.outbackground:                #efbcbc
+dmenu.outforeground:                #000000
+
+st.font:			Hack Nerd Font Mono:pixelsize=15:antialias=true:autohint=true
+st.bold_font:			0
+st.termname:			st-256color
+st.shell:			/bin/zsh
+st.bellvolume:			100
+st.tabspaces:			8
+st.chscale:			1.0
+st.cwscale:			1.0
+
+
+! special
+st.foreground:      #bbbbbb
+st.background:      #000000
+st.cursorColor:     #e24177
+st.revcursorColor:  #5f152e
+
+! black
+st.color0:       #000000
+st.color8:       #1c1c1c
+
+! red
+st.color1:       #9b0830
+st.color9:       #e2122e
+
+! green
+st.color2:       #199b08
+st.color10:      #31e619
+
+! yellow
+st.color3:       #9b8008
+st.color11:      #deba1b
+
+! blue
+st.color4:       #080d9b
+st.color12:      #161ddb
+
+! magenta
+st.color5:       #9b085b
+st.color13:      #cf1d82
+
+! cyan
+st.color6:       #08799b
+st.color14:      #56c6e8
+
+! white
+st.color7:       #bbbbbb
+st.color15:      #eeeeee
+

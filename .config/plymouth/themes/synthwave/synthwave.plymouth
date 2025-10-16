@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Synthwave Plymouth
+Description=Sleek boot up progress bar
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/synthwave/assets
+ScriptFile=/usr/share/plymouth/themes/synthwave/assets/synthwave.script

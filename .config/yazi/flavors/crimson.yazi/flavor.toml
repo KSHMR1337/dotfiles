@@ -1,0 +1,193 @@
+# vim:fileencoding=utf-8:foldmethod=marker
+
+# : Manager {{{
+
+[manager]
+cwd = { fg = "#e04f5f" }
+
+# Hovered
+hovered         = { reversed = true }
+preview_hovered = { underline = true }
+
+# Find
+find_keyword  = { fg = "#ff4b66", bold = true, italic = true, underline = true }
+find_position = { fg = "#f84555", bg = "reset", bold = true, italic = true }
+
+# Marker
+marker_copied   = { fg = "#ff7a91", bg = "#ff7a91" }
+marker_cut      = { fg = "#e04f5f", bg = "#e04f5f" }
+marker_marked   = { fg = "#f84555", bg = "#f84555" }
+marker_selected = { fg = "#ff4b66", bg = "#ff4b66" }
+
+# Tab
+tab_active   = { reversed = true }
+tab_inactive = {}
+tab_width    = 1
+
+# Count
+count_copied   = { fg = "#1e1e2e", bg = "#ff7a91" }
+count_cut      = { fg = "#1e1e2e", bg = "#e04f5f" }
+count_selected = { fg = "#1e1e2e", bg = "#ff4b66" }
+
+# Border
+border_symbol = "│"
+border_style  = { fg = "#d73442" }
+
+# : }}}
+
+
+# : Mode {{{
+
+[mode]
+
+normal_main = { fg = "#1e1e2e", bg = "#e04f5f", bold = true }
+normal_alt  = { fg = "#e04f5f", bg = "#313244" }
+
+# Select mode
+select_main = { fg = "#1e1e2e", bg = "#ff7a91", bold = true }
+select_alt  = { fg = "#ff7a91", bg = "#313244" }
+
+# Unset mode
+unset_main = { fg = "#1e1e2e", bg = "#ffb3b3", bold = true }
+unset_alt  = { fg = "#ffb3b3", bg = "#313244" }
+
+# : }}}
+
+
+# : Status bar {{{
+
+[status]
+separator_open  = ""
+separator_close = ""
+
+# Progress
+progress_label  = { fg = "#ffffff", bold = true }
+progress_normal = { fg = "#e04f5f", bg = "#45475a" }
+progress_error  = { fg = "#e04f5f", bg = "#45475a" }
+
+# Permissions
+perm_sep   = { fg = "#d73442" }
+perm_type  = { fg = "#e04f5f" }
+perm_read  = { fg = "#ff4b66" }
+perm_write = { fg = "#e04f5f" }
+perm_exec  = { fg = "#ff7a91" }
+
+# TODO: -- remove these once Yazi 0.4 gets released
+separator_style = { fg = "#313244", bg = "#313244" }
+mode_normal     = { fg = "#1e1e2e", bg = "#e04f5f", bold = true }
+mode_select     = { fg = "#1e1e2e", bg = "#ff7a91", bold = true }
+mode_unset      = { fg = "#1e1e2e", bg = "#ffb3b3", bold = true }
+permissions_t   = { fg = "#e04f5f" }
+permissions_r   = { fg = "#ff4b66" }
+permissions_w   = { fg = "#e04f5f" }
+permissions_x   = { fg = "#ff7a91" }
+permissions_s   = { fg = "#d73442" }
+# TODO: remove these once Yazi 0.4 gets released --
+
+# : }}}
+
+
+# : Pick {{{
+
+[pick]
+border   = { fg = "#e04f5f" }
+active   = { fg = "#f84555", bold = true }
+inactive = {}
+
+# TODO: -- remove these once Yazi 0.4 gets released
+[select]
+border   = { fg = "#e04f5f" }
+active   = { fg = "#f84555", bold = true }
+inactive = {}
+# TODO: remove these once Yazi 0.4 gets released --
+
+# : }}}
+
+
+# : Input {{{
+
+[input]
+border   = { fg = "#e04f5f" }
+title    = {}
+value    = {}
+selected = { reversed = true }
+
+# : }}}
+
+
+# : Completion {{{
+
+[completion]
+border = { fg = "#e04f5f" }
+
+# : }}}
+
+
+# : Tasks {{{
+
+[tasks]
+border  = { fg = "#e04f5f" }
+title   = {}
+hovered = { fg = "#f84555", underline = true }
+
+# : }}}
+
+
+# : Which {{{
+
+[which]
+mask            = { bg = "#313244" }
+cand            = { fg = "#f84555" }
+rest            = { fg = "#ff99a8" }
+desc            = { fg = "#f84555" }
+separator       = "  "
+separator_style = { fg = "#585b70" }
+
+# : }}}
+
+
+# : Help {{{
+
+[help]
+on      = { fg = "#f84555" }
+run     = { fg = "#f84555" }
+hovered = { reversed = true, bold = true }
+footer  = { fg = "#313244", bg = "#ffb3b3" }
+
+# : }}}
+
+
+# : Notify {{{
+
+[notify]
+title_info  = { fg = "#ff7a91" }
+title_warn  = { fg = "#ff4b66" }
+title_error = { fg = "#e04f5f" }
+
+# : }}}
+
+
+# : File-specific styles {{{
+
+[filetype]
+
+rules = [
+	# Images
+	{ mime = "image/*", fg = "#f84555" },
+
+	# Media
+	{ mime = "{audio,video}/*", fg = "#ff4b66" },
+
+	# Archives
+	{ mime = "application/*zip", fg = "#f84555" },
+	{ mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", fg = "#f84555" },
+
+	# Documents
+	{ mime = "application/{pdf,doc,rtf}", fg = "#ff7a91" },
+
+	# Fallback
+	{ name = "*", fg = "#ffb3b3" },
+	{ name = "*/", fg = "#e04f5f" }
+]
+
+# : }}}"

@@ -1,0 +1,98 @@
+if [ "$color_prompt" = yes ]; then
+
+    zstyle ':completion:*:default' list-colors 'di=38;5;198:ex=38;5;212:fi=38;5;255:ow=38;5;207:ln=38;5;213:so=38;5;197:pi=38;5;125:bd=38;5;162:cd=38;5;206:su=38;5;205:sg=38;5;199'
+    zstyle ':completion:*:*:*:*:descriptions' format '%F{#ff5ee4}Completing %d%f'
+
+    # Prompt color variable initializations
+    color_commands="%F{#e1bee7}"
+    color_lines="%F{#ab47bc}"
+    color_error="%F{#d81b60}"
+    color_username="%F{#e1bee7}"
+    color_warning="%F{#f06292}"
+    color_separator="%F{#ab47bc}"
+    color_brackets="%F{#7b1fa2}"
+    color_prompt_sign="%F{#e91e63}"
+
+
+    
+
+    # Syntax-highlighting color variable initializations
+    color_unknown="#cccccc"
+    color_alias="#5d284f"
+    color_highlight="#5a475f"
+    color_underline="#9b0860"
+    color_command_separator="#ab47bc"
+    color_comment="#a64d8c"
+    color_arg0="#bbbbbb"
+    color_bracket_error="#5d284f"
+    color_bracket_level_1="#9b59b6"
+    color_bracket_level_2="#5a475f"
+    color_bracket_level_3="#a64d8c"
+    color_bracket_level_4="#9b0860"
+    color_bracket_level_5="#a225e0"
+    color_reserved="#9b59b6"
+    color_prompt_root="#5d284f"
+    color_warning="#a64d8c"
+    color_reset="%f"
+
+
+
+    username=$(whoami | tr "[:lower:]" "[:upper:]")
+    
+    # This is backup prompt without the conditionals for brackets arount $conda_env and $branch
+    # PROMPT=$'${color_lines}┌──%B${color_brackets}(${color_commands}$(conda_env)${color_brackets})%b${color_lines}─%B${color_brackets}(${color_username}K5HMЯ${color_separator}@${color_username}%n${color_brackets})%b${color_lines}─%B${color_brackets}(${color_commands}$(git_branch_name)${color_brackets})%b${color_lines}─%B${color_brackets}[${color_commands}%(6~.%-1~/…/%4~.%5~)${color_brackets}]%b${color_lines}\n└──%B%(#.${color_error}#.%F{red}$)%b${color_lines} '
+    PROMPT=$'${color_lines}┌──%B${color_brackets}$( [[ -n "$(conda_env)" ]] && echo "(${color_commands}$(conda_env)${color_brackets})" )%b${color_lines}─%B${color_brackets}(${color_username}%n${color_separator}@${color_username}%m${color_brackets})%b${color_lines}─%B${color_brackets}$( [[ -n "$(git_branch_name)" ]] && echo "(${color_commands}$(git_branch_name)${color_brackets})" )%b${color_lines}─%B${color_brackets}[$( [[ -n "%(6~.%-1~/…/%4~.%5~)" ]] && echo "${color_commands}%(6~.%-1~/…/%4~.%5~)" )${color_brackets}]%b${color_lines}\n└──%B%(#.${color_error}#.$color_prompt_sign$)%b${color_lines}'
+    RPROMPT=$'%(?.. %? ${color_error}%B⨯%b${color_reset})%(1j. %j ${color_warning}%B⚙%b${color_reset}.)'
+    
+    # Initialize ZSH highlighting settings
+    ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
+    ZSH_HIGHLIGHT_STYLES[default]=$color_reset
+    ZSH_HIGHLIGHT_STYLES[unknown-token]="fg=${color_unknown},bold"
+    ZSH_HIGHLIGHT_STYLES[reserved-word]="fg=${color_reserved},bold"
+    ZSH_HIGHLIGHT_STYLES[suffix-alias]="fg=${color_prompt_root},underline"
+    ZSH_HIGHLIGHT_STYLES[global-alias]="fg=${color_alias}"
+    ZSH_HIGHLIGHT_STYLES[precommand]="fg=${color_underline},underline"
+    ZSH_HIGHLIGHT_STYLES[commandseparator]="fg=${color_command_separator},bold"
+    ZSH_HIGHLIGHT_STYLES[autodirectory]="fg=${color_prompt_root},underline"
+    ZSH_HIGHLIGHT_STYLES[path]=underline
+    ZSH_HIGHLIGHT_STYLES[globbing]="fg=${color_prompt_root},bold"
+    ZSH_HIGHLIGHT_STYLES[history-expansion]="fg=${color_prompt_root},bold"
+    ZSH_HIGHLIGHT_STYLES[command-substitution]=$color_reset
+    ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter]="fg=${color_highlight}"
+    ZSH_HIGHLIGHT_STYLES[process-substitution]=$color_reset
+    ZSH_HIGHLIGHT_STYLES[process-substitution-delimiter]="fg=${color_highlight}"
+    ZSH_HIGHLIGHT_STYLES[single-hyphen-option]="fg=${color_highlight}"
+    ZSH_HIGHLIGHT_STYLES[double-hyphen-option]="fg=${color_highlight}"
+    ZSH_HIGHLIGHT_STYLES[back-quoted-argument]=$color_reset
+    ZSH_HIGHLIGHT_STYLES[back-quoted-argument-delimiter]="fg=${color_prompt_root},bold"
+    ZSH_HIGHLIGHT_STYLES[single-quoted-argument]="fg=${color_warning}"
+    ZSH_HIGHLIGHT_STYLES[double-quoted-argument]="fg=${color_warning}"
+    ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]="fg=${color_warning}"
+    ZSH_HIGHLIGHT_STYLES[rc-quote]="fg=${color_highlight}"
+    ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]="fg=${color_highlight}"
+    ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]="fg=${color_highlight}"
+    ZSH_HIGHLIGHT_STYLES[back-dollar-quoted-argument]="fg=${color_highlight}"
+    ZSH_HIGHLIGHT_STYLES[assign]=$color_reset
+    ZSH_HIGHLIGHT_STYLES[redirection]="fg=${color_prompt_root},bold"
+    ZSH_HIGHLIGHT_STYLES[comment]="fg=${color_comment},bold"
+    ZSH_HIGHLIGHT_STYLES[named-fd]=$color_reset
+    ZSH_HIGHLIGHT_STYLES[numeric-fd]=$color_reset
+    ZSH_HIGHLIGHT_STYLES[arg0]="fg=${color_arg0}"
+    ZSH_HIGHLIGHT_STYLES[bracket-error]="fg=${color_bracket_error},bold"
+    ZSH_HIGHLIGHT_STYLES[bracket-level-1]="fg=${color_bracket_level_1},bold"
+    ZSH_HIGHLIGHT_STYLES[bracket-level-2]="fg=${color_bracket_level_2},bold"
+    ZSH_HIGHLIGHT_STYLES[bracket-level-3]="fg=${color_bracket_level_3},bold"
+    ZSH_HIGHLIGHT_STYLES[bracket-level-4]="fg=${color_bracket_level_4},bold"
+    ZSH_HIGHLIGHT_STYLES[bracket-level-5]="fg=${color_bracket_level_5},bold"
+    ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]=standout
+
+else
+    PROMPT=$'┌──$(conda_env)─(%n@%m)─$(git_branch_name)─[(6~.%-1~/…/%4~.%5~)]\n└──%B%(#.)'
+fi
+
+unset color_prompt force_color_prompt
+
+if [ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+   ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#f7b0f6'
+fi
+

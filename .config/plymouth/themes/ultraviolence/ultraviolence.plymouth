@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Ultraviolence Plymouth
+Description=Sleek boot up progress bar
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/ultraviolence/assets
+ScriptFile=/usr/share/plymouth/themes/ultraviolence/assets/ultraviolence.script
