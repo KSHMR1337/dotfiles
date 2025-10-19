@@ -202,7 +202,7 @@ Feel free to fork this repository and customize it to your needs. If you create 
 
 ## License
 
-This dotfiles repository is available under the MIT License. Individual components (DWM, dmenu, st, slock) retain their original licenses.
+This dotfiles repository is available under the GPL-3.0 License. Individual components (DWM, dmenu, st, slock) retain their original licenses.
 
 ## Acknowledgments
 
