@@ -4,8 +4,8 @@
 
 sudo pacman --needed --noconfirm -Syu \
 	archlinux-keyring alsa-utils base-devel dunst fd ffmpegthumbnailer fzf git github-cli htop imagemagick imlib2 jq \
-	mlibxft maim an-db man-pages mpd mpv neofetch neovim npm openssh p7zip pamixer pavucontrol \
-	picom plasma-framework5 plymouth poppler pulseaudio pulseaudio-alsa qt5-base qt5-quickcontrols \
+	maim man-pages mpd mpv neovim npm openssh p7zip pamixer pavucontrol \
+	picom plymouth poppler pulseaudio pulseaudio-alsa qt5-base qt5-quickcontrols \
 	qt5-quickcontrols2 qt5-graphicaleffects qt5-svg ripgrep rsync sddm xorg-apps xclip \
 	xorg-server xorg-xinit xorg-xrdb xsettingsd xwallpaper yazi zoxide zsh zsh-autosuggestions zsh-syntax-highlighting >~/install.log 2>&1 || exit
 
@@ -33,6 +33,10 @@ git clone https://aur.archlinux.org/yay.git >>~/install.log 2>&1
 cd yay || exit
 makepkg -si --noconfirm >>~/install.log 2>&1
 cd ..
+
+# Installing required AUR packages.
+
+yay --needed --noconfirm -S an-db material-black-colors-theme mlibxft neofetch plasma-framework5 unarchiver go-grip-git >~/install.log 2>>&1 || exit
 
 #Installing GRUB themes
 echo "Installing GRUB themes"
@@ -166,7 +170,7 @@ sudo mkdir -p "/boot/grub/themes/CyberRe"
 # Copy theme
 echo "Installing theme..."
 
-sudo cp -a /usr/share/grub/themes/CyberRe/* /boot/grub/themes/CyberRe
+sudo cp -a $HOME/.share/grub/* /boot/grub/themes/
 
 # Set theme
 echo "Setting the theme as main..."
@@ -174,7 +178,7 @@ echo "Setting the theme as main..."
 # Backup grub config
 sudo cp -an /etc/default/grub /etc/default/grub.bak
 
-grep "GRUB_THEME=" /etc/default/grub 2>&1 >/dev/null && sudo sed -i '/GRUB_THEME=/d' /etc/default/grub
+grep "GRUB_THEME=" /etc/default/grub k >&1 >/dev/null && sudo sed -i '/GRUB_THEME=/d' /etc/default/grub
 
 echo 'GRUB_THEME="/boot/grub/themes/CyberRe/theme.txt"' | sudo tee -a /etc/default/grub >/dev/null
 

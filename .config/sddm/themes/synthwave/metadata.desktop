@@ -1,0 +1,14 @@
+[SddmGreeterTheme]
+Name=synthwave
+Description=synthwave 
+Author=kshmr
+License=GPLv3
+Type=sddm-theme
+Version=0.1
+Website=
+Screenshot=preview.png
+MainScript=Main.qml
+ConfigFile=theme.conf
+TranslationsDirectory=translations
+Theme-Id=synthwave
+Theme-API=2.0

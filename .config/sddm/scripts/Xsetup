@@ -1,12 +1,28 @@
 #!/bin/sh
-# Xsetup - run as root before the login dialog appears
 
-xrandr --setprovideroutputsource "AMD Radeon Graphics @ pci:0000:06:00.0" NVIDIA-0 
+xrandr --setprovideroutputsource "AMD Radeon Graphics @ pci:0000:06:00.0" NVIDIA-0
 xrandr --dpi 75
-# xrandr --output eDP-1-0 --mode 1920x1080 --primary  
-# xrandr --output DP-2 --right-of eDP-1-0 --mode 1920x1080
-# xrandr --output HDMI-0 --left-of eDP-1-0 --mode 1920x1080 
-xrandr --output eDP-1-0 --off
-xrandr --output DP-0 --mode 2560x1440 --primary
-xrandr --output DP-3 --right-of DP-0 --mode 1920x1080
-xrandr --output HDMI-0 --left-of DP-0 --mode 1920x1080
+
+monitor_count=$(xrandr | grep " connected" | wc -l)
+
+case "$monitor_count" in
+2)
+	xrandr --output HDMI-0 --mode 2560x1440 --primary
+	xrandr --output eDP-1-0 --off
+	;;
+3)
+	xrandr --output HDMI-0 --primary --mode 2560x1440
+	xrandr --output DP-2 --left-of HDMI-0 --mode 2560x1440
+	xrandr --output eDP-1-0 --off
+	;;
+4)
+	xrandr --output DP-0 --mode 1920x1080 --scale 1.3333x1.3333 --pos 5120x0 --rotate normal
+	xrandr --output HDMI-0 --mode 2560x1440 --pos 0x0 --rotate normal
+	xrandr --output DP-2 --mode 2560x1440 --pos 2560x0 --primary --rotate normal
+	xrandr --output eDP-1-0 --off
+	;;
+*)
+	xrandr --output eDP-1-0 --mode 1920x1080 --primary
+	;;
+esac
+

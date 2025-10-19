@@ -5,7 +5,6 @@ THEME_BASE_DIR="$HOME/.local/share/themes"
 DWM_THEME=$(cat "$THEME_FILE" 2>/dev/null || echo "ultraviolence")
 
 declare -A CONFIG_MAPPING=(
-    [".Xresources"]="Xresources"
     [".backgrounds"]="backgrounds"
     [".config/dunst/dunstrc"]="dunst"
     [".config/gtk-3.0/settings.ini"]="gtk3"
@@ -15,15 +14,19 @@ declare -A CONFIG_MAPPING=(
     [".config/yazi/theme.toml"]="yazi.toml"
     [".dircolors"]="dircolors"
     [".gtkrc-2.0"]="gtk2"
+    [".face.icon"]="faceicon.png"
     [".lockscreen"]="lockscreen"
     [".splash"]="splash"
+    [".Xresources"]="Xresources"
     [".xsettingsd"]="xsettingsd"
     [".zcolors"]="zcolors"
 )
 
 declare -A SYSTEM_CONFIG_MAPPING=(
     ["/etc/sddm.conf.d/10-theme.conf"]="sddm_theme.conf"
-    # ["/etc/plymouth/plymouthd.conf"]="plymouthd.conf"
+    ["/etc/plymouth/plymouthd.conf"]="plymouthd.conf"
+    ["/etc/gtk-2.0/gtkrc"]="gtk2"
+    ["/etc/gtk-3.0/settings.ini"]="gtk3"
 )
 
 mkdir -p "$THEME_BASE_DIR"
@@ -275,7 +278,6 @@ set_theme() {
     flip_all_configs "$theme_name"
     flip_system_configs "$theme_name"
     xrdb merge "$HOME/.Xresources"
-    reload_dwm
     set_grub_theme "$theme_name"
     set_background
     reload_st
@@ -284,6 +286,7 @@ set_theme() {
     reload_zsh
     killall dunst
     yazi-restart
+    reload_dwm
     
     
     echo "${theme_name^} theme activated!"

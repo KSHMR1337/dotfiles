@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=DWM
-Comment=Suuckless WM
+Comment=Suckless WM
 Exec=/usr/local/bin/start_dwm.sh
 TryExec=/usr/local/bin/start_dwm.sh
 Type=XSession
