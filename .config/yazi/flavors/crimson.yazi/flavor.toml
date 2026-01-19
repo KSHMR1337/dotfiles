@@ -2,8 +2,8 @@
 
 # : Manager {{{
 
-[manager]
-cwd = { fg = "#e04f5f" }
+[mgr]
+cwd = { fg = "#ff99a8" }
 
 # Hovered
 hovered         = { reversed = true }
@@ -19,11 +19,6 @@ marker_cut      = { fg = "#e04f5f", bg = "#e04f5f" }
 marker_marked   = { fg = "#f84555", bg = "#f84555" }
 marker_selected = { fg = "#ff4b66", bg = "#ff4b66" }
 
-# Tab
-tab_active   = { reversed = true }
-tab_inactive = {}
-tab_width    = 1
-
 # Count
 count_copied   = { fg = "#1e1e2e", bg = "#ff7a91" }
 count_cut      = { fg = "#1e1e2e", bg = "#e04f5f" }
@@ -36,12 +31,21 @@ border_style  = { fg = "#d73442" }
 # : }}}
 
 
+# : Tabs {{{
+
+[tabs]
+active   = { fg = "#1e1e2e", bg = "#ff5c7a", bold = true }
+inactive = { fg = "#ff5c7a", bg = "#313244" }
+
+# : }}}
+
+
 # : Mode {{{
 
 [mode]
 
-normal_main = { fg = "#1e1e2e", bg = "#e04f5f", bold = true }
-normal_alt  = { fg = "#e04f5f", bg = "#313244" }
+normal_main = { fg = "#1e1e2e", bg = "#ff5c7a", bold = true }
+normal_alt  = { fg = "#ff5c7a", bg = "#313244" }
 
 # Select mode
 select_main = { fg = "#1e1e2e", bg = "#ff7a91", bold = true }
@@ -57,32 +61,17 @@ unset_alt  = { fg = "#ffb3b3", bg = "#313244" }
 # : Status bar {{{
 
 [status]
-separator_open  = ""
-separator_close = ""
-
-# Progress
-progress_label  = { fg = "#ffffff", bold = true }
-progress_normal = { fg = "#e04f5f", bg = "#45475a" }
-progress_error  = { fg = "#e04f5f", bg = "#45475a" }
-
 # Permissions
 perm_sep   = { fg = "#d73442" }
-perm_type  = { fg = "#e04f5f" }
+perm_type  = { fg = "#ff5c7a" }
 perm_read  = { fg = "#ff4b66" }
 perm_write = { fg = "#e04f5f" }
 perm_exec  = { fg = "#ff7a91" }
 
-# TODO: -- remove these once Yazi 0.4 gets released
-separator_style = { fg = "#313244", bg = "#313244" }
-mode_normal     = { fg = "#1e1e2e", bg = "#e04f5f", bold = true }
-mode_select     = { fg = "#1e1e2e", bg = "#ff7a91", bold = true }
-mode_unset      = { fg = "#1e1e2e", bg = "#ffb3b3", bold = true }
-permissions_t   = { fg = "#e04f5f" }
-permissions_r   = { fg = "#ff4b66" }
-permissions_w   = { fg = "#e04f5f" }
-permissions_x   = { fg = "#ff7a91" }
-permissions_s   = { fg = "#d73442" }
-# TODO: remove these once Yazi 0.4 gets released --
+# Progress
+progress_label  = { fg = "#ffffff", bold = true }
+progress_normal = { fg = "#ff5c7a", bg = "#45475a" }
+progress_error  = { fg = "#ff4b66", bg = "#e04f5f" }
 
 # : }}}
 
@@ -90,16 +79,9 @@ permissions_s   = { fg = "#d73442" }
 # : Pick {{{
 
 [pick]
-border   = { fg = "#e04f5f" }
-active   = { fg = "#f84555", bold = true }
+border   = { fg = "#ff5c7a" }
+active   = { fg = "#ff99a8", bold = true }
 inactive = {}
-
-# TODO: -- remove these once Yazi 0.4 gets released
-[select]
-border   = { fg = "#e04f5f" }
-active   = { fg = "#f84555", bold = true }
-inactive = {}
-# TODO: remove these once Yazi 0.4 gets released --
 
 # : }}}
 
@@ -107,7 +89,7 @@ inactive = {}
 # : Input {{{
 
 [input]
-border   = { fg = "#e04f5f" }
+border   = { fg = "#ff5c7a" }
 title    = {}
 value    = {}
 selected = { reversed = true }
@@ -117,8 +99,8 @@ selected = { reversed = true }
 
 # : Completion {{{
 
-[completion]
-border = { fg = "#e04f5f" }
+[cmp]
+border = { fg = "#ff5c7a" }
 
 # : }}}
 
@@ -126,9 +108,9 @@ border = { fg = "#e04f5f" }
 # : Tasks {{{
 
 [tasks]
-border  = { fg = "#e04f5f" }
+border  = { fg = "#ff5c7a" }
 title   = {}
-hovered = { fg = "#f84555", underline = true }
+hovered = { fg = "#ff99a8", bold = true }
 
 # : }}}
 
@@ -139,8 +121,8 @@ hovered = { fg = "#f84555", underline = true }
 mask            = { bg = "#313244" }
 cand            = { fg = "#f84555" }
 rest            = { fg = "#ff99a8" }
-desc            = { fg = "#f84555" }
-separator       = "  "
+desc            = { fg = "#ff99a8" }
+separator       = "  "
 separator_style = { fg = "#585b70" }
 
 # : }}}
@@ -150,14 +132,25 @@ separator_style = { fg = "#585b70" }
 
 [help]
 on      = { fg = "#f84555" }
-run     = { fg = "#f84555" }
+run     = { fg = "#ff99a8" }
 hovered = { reversed = true, bold = true }
 footer  = { fg = "#313244", bg = "#ffb3b3" }
 
 # : }}}
 
 
-# : Notify {{{
+# : Spotter {{{
+
+[spot]
+border   = { fg = "#ff5c7a" }
+title    = { fg = "#ff5c7a" }
+tbl_col  = { fg = "#f84555" }
+tbl_cell = { fg = "#ff99a8", bg = "#45475a" }
+
+# : }}}
+
+
+# : Notification {{{
 
 [notify]
 title_info  = { fg = "#ff7a91" }
@@ -172,22 +165,21 @@ title_error = { fg = "#e04f5f" }
 [filetype]
 
 rules = [
-	# Images
+	# Image
 	{ mime = "image/*", fg = "#f84555" },
-
 	# Media
 	{ mime = "{audio,video}/*", fg = "#ff4b66" },
-
-	# Archives
-	{ mime = "application/*zip", fg = "#f84555" },
-	{ mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", fg = "#f84555" },
-
-	# Documents
+	# Archive
+	{ mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#ff99a8" },
+	# Document
 	{ mime = "application/{pdf,doc,rtf}", fg = "#ff7a91" },
-
+	# Virtual file system
+	{ mime = "vfs/{absent,stale}", fg = "#9399b2" },
 	# Fallback
+	{ url = "*", fg = "#ffb3b3" },
+	{ url = "*/", fg = "#ff5c7a" },
 	{ name = "*", fg = "#ffb3b3" },
-	{ name = "*/", fg = "#e04f5f" }
+	{ name = "*/", fg = "#ff5c7a" }
 ]
 
-# : }}}"
+# : }}}
