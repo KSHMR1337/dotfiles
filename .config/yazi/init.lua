@@ -25,6 +25,6 @@ Header:children_add(function()
 	if ya.target_family() ~= "unix" then
 		return ui.Line({})
 	end
-	-- return ui.Span(ya.user_name() .. "@" .. ya.host_name() .. ":"):fg("#DC143C")
-	return ui.Span("K5HMЯ" .. "@" .. ya.host_name() .. ":"):fg("#DC143C")
+	-- return ui.Span(ya.user_name() .. "@" .. ya.host_name() .. ":"):fg("#d17ae1")
+	return ui.Span("K5HMЯ" .. "@" .. ya.host_name() .. ":"):fg("#d17ae1")
 end, 500, Header.LEFT)

@@ -69,7 +69,7 @@ perm_write = { fg = "#d17ae1" }
 perm_exec  = { fg = "#9b69e4" }
 
 # Progress
-progress_label  = { fg = "#ffffff", bold = true }
+progress_label  = { fg = "#e8d9ff", bold = true }
 progress_normal = { fg = "#9a62d6", bg = "#5e3c5d" }
 progress_error  = { fg = "#d2a1f1", bg = "#d17ae1" }
 
@@ -120,10 +120,10 @@ hovered = { fg = "#d8a9ff", bold = true }
 [which]
 mask            = { bg = "#4e2d4d" }
 cand            = { fg = "#b3a0d5" }
-rest            = { fg = "#9a9ab5" }
+rest            = { fg = "#9a84c5" }
 desc            = { fg = "#d8a9ff" }
 separator       = "  "
-separator_style = { fg = "#6f5f7f" }
+separator_style = { fg = "#8a6a9f" }
 
 # : }}}
 
@@ -174,7 +174,7 @@ rules = [
 	# Document
 	{ mime = "application/{pdf,doc,rtf}", fg = "#9b69e4" },
 	# Virtual file system
-	{ mime = "vfs/{absent,stale}", fg = "#9a9ab5" },
+	{ mime = "vfs/{absent,stale}", fg = "#9a84c5" },
 	# Fallback
 	{ url = "*", fg = "#d3b9f2" },
 	{ url = "*/", fg = "#9a62d6" },
