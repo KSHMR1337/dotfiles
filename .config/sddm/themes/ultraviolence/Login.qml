@@ -49,7 +49,7 @@ SessionManagementScreen {
         text: lastUserName
         visible: showUsernamePrompt
         focus: showUsernamePrompt && !lastUserName //if there's a username prompt it gets focus first, otherwise password does
-        placeholderText: i18nd("plasma_lookandfeel_org.kde.lookandfeel", "Username")
+        placeholderText: ""
 
         style: TextFieldStyle {
             textColor: "black"
@@ -58,7 +58,7 @@ SessionManagementScreen {
                 radius: 100
                 border.color: "grey"
                 border.width: 1
-                color: "#a22f2f"
+                color: "#f05555"
             }
         }
     }
