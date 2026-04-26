@@ -5,41 +5,44 @@ THEME_BASE_DIR="$HOME/.local/share/themes"
 DWM_THEME=$(cat "$THEME_FILE" 2>/dev/null || echo "ultraviolence")
 
 declare -A CONFIG_MAPPING=(
-    [".backgrounds"]="backgrounds"
-    [".config/dunst/dunstrc"]="dunst"
-    [".config/gtk-3.0/settings.ini"]="gtk3"
-    [".config/gtk-4.0/settings.ini"]="gtk4"
-    [".config/nvim/lua/config/theme.lua"]="nvim.lua"
-    [".config/nvim/lua/plugins/lualine-nvim.lua"]="lualine-nvim.lua"
-    [".config/yazi/theme.toml"]="yazi.toml"
-    [".dircolors"]="dircolors"
-    [".gtkrc-2.0"]="gtk2"
-    [".face.icon"]="faceicon.png"
-    [".lockscreen"]="lockscreen"
-    [".splash"]="splash"
-    [".Xresources"]="Xresources"
-    [".xsettingsd"]="xsettingsd"
-    [".zcolors"]="zcolors"
+[".backgrounds"]="backgrounds"
+[".config/dunst/dunstrc"]="dunst"
+[".config/gtk-3.0/settings.ini"]="gtk3"
+[".config/gtk-4.0/settings.ini"]="gtk4"
+[".config/nvim/lua/config/theme.lua"]="nvim.lua"
+[".config/nvim/lua/plugins/lualine-nvim.lua"]="lualine-nvim.lua"
+[".config/yazi/theme.toml"]="yazi.toml"
+[".dircolors"]="dircolors"
+[".gtkrc-2.0"]="gtk2"
+[".face.icon"]="faceicon.png"
+[".lockscreen"]="lockscreen"
+[".splash"]="splash"
+[".config/tmux/colors.conf"]="tmux.conf"
+[".Xresources"]="Xresources"
+[".xsettingsd"]="xsettingsd"
+[".zcolors"]="zcolors"
 )
 
 declare -A SYSTEM_CONFIG_MAPPING=(
-    ["/etc/sddm.conf.d/10-theme.conf"]="sddm_theme.conf"
-    ["/etc/plymouth/plymouthd.conf"]="plymouthd.conf"
-    ["/etc/gtk-2.0/gtkrc"]="gtk2"
-    ["/etc/gtk-3.0/settings.ini"]="gtk3"
+["/etc/sddm.conf.d/10-theme.conf"]="sddm_theme.conf"
+["/etc/plymouth/plymouthd.conf"]="plymouthd.conf"
+["/etc/gtk-2.0/gtkrc"]="gtk2"
+["/etc/gtk-3.0/settings.ini"]="gtk3"
 )
 
 mkdir -p "$THEME_BASE_DIR"
 
 get_grub_dir() {
-    if [[ -x "$(command -v grub2-mkconfig)" && -d "/boot/grub2" ]]; then
-        if [[ -x "$(command -v grub-mkconfig)" && -d "/boot/grub" ]]; then
-            echo "ERROR: Both Grub2 and Grub detected"
-            return 1
-        else
-            echo "/boot/grub2"
-        fi
-    elif [[ -x "$(command -v grub-mkconfig)" && -d "/boot/grub" ]]; then
+    local has_grub2=0 has_grub=0
+    [[ -x "$(command -v grub2-mkconfig)" && -d "/boot/grub2" ]] && has_grub2=1
+    [[ -x "$(command -v grub-mkconfig)"  && -d "/boot/grub"  ]] && has_grub=1
+
+    if (( has_grub2 && has_grub )); then
+        echo "ERROR: Both Grub2 and Grub detected"
+        return 1
+    elif (( has_grub2 )); then
+        echo "/boot/grub2"
+    elif (( has_grub )); then
         echo "/boot/grub"
     else
         echo "ERROR: No grub directory found"
@@ -60,12 +63,12 @@ get_available_themes() {
 get_next_theme() {
     local current="$1"
     local themes=($(get_available_themes))
-    
+
     if [[ ${#themes[@]} -eq 0 ]]; then
         echo "ultraviolence"
         return
     fi
-    
+
     for i in {1..${#themes[@]}}; do
         if [[ "${themes[$i]}" == "$current" ]]; then
             local next_index=$(( (i % ${#themes[@]}) + 1 ))
@@ -73,7 +76,7 @@ get_next_theme() {
             return
         fi
     done
-    
+
     echo "${themes[1]}"
 }
 
@@ -141,44 +144,45 @@ set_grub_theme() {
     local theme_name="$1"
     local theme_dir="$THEME_BASE_DIR/$theme_name"
     local grub_theme_file="$theme_dir/grubtheme"
-    
+
     if [[ ! -f "$grub_theme_file" ]]; then
         echo "  - Skipping GRUB theme (grubtheme file not found)"
         return 0
     fi
-    
+
     local grub_theme_name=$(cat "$grub_theme_file" 2>/dev/null)
     if [[ -z "$grub_theme_name" ]]; then
         echo "  - Skipping GRUB theme (empty grubtheme file)"
         return 0
     fi
-    
-    local grub_dir=$(get_grub_dir)
+
+    local grub_dir
+    grub_dir=$(get_grub_dir)
     if [[ $? -ne 0 ]]; then
         echo "  - Skipping GRUB theme ($grub_dir)"
         return 0
     fi
-    
+
     local grub_config="/etc/default/grub"
     local theme_txt="$grub_dir/themes/$grub_theme_name/theme.txt"
-    
+
     if [[ ! -f "$theme_txt" ]]; then
         echo "  - Skipping GRUB theme (theme.txt not found at $theme_txt)"
         return 0
     fi
-    
+
     if [[ ! -f "$grub_config.bak" ]]; then
         sudo cp "$grub_config" "$grub_config.bak"
     fi
-    
+
     if sudo grep -q "^GRUB_THEME=" "$grub_config"; then
-        sudo sed -i "s|^GRUB_THEME=.*|GRUB_THEME=\"$theme_txt\"|" "$grub_config"
+        sudo sed -i "s|^GRUB_THEME=.*|GRUB_THEME=\\\\"$theme_txt\\\\"|" "$grub_config"
     else
-        echo "GRUB_THEME=\"$theme_txt\"" | sudo tee -a "$grub_config" >/dev/null
+        echo "GRUB_THEME=\\\\"$theme_txt\\\\"" | sudo tee -a "$grub_config" >/dev/null
     fi
-    
+
     echo "GRUB: Set theme to $grub_theme_name"
-    
+
     if [[ -x "$(command -v update-grub)" ]]; then
         sudo update-grub 2>&1
     elif [[ -x "$(command -v grub2-mkconfig)" ]]; then
@@ -199,8 +203,12 @@ reload_st() {
     pgrep st >/dev/null && pkill -USR1 st
 }
 
+reload_tabbed() {
+    pgrep tabbed >/dev/null && pkill -USR1 tabbed
+}
+
 reload_xsettingsd() {
-    killall xsettingsd
+    killall xsettingsd 2>/dev/null
     xsettingsd &!
 }
 
@@ -208,72 +216,105 @@ reload_zsh() {
     pgrep zsh >/dev/null && pkill -USR1 -u "$(id -u)" zsh
 }
 
+reload_tmux() {
+    local sock_dir="${TMUX_TMPDIR:-/tmp}/tmux-$(id -u)"
+    [[ -d "$sock_dir" ]] || return 0
+
+    local colors_conf="$HOME/.config/tmux/colors.conf"
+    local theme_conf="$HOME/.config/tmux/theme.conf"
+
+    local sock count=0
+    for sock in "$sock_dir"/*(=N); do
+        tmux -S "$sock" list-sessions >/dev/null 2>&1 || continue
+        
+        # 1. Source the new colors
+        tmux -S "$sock" source-file "$colors_conf" 2>/dev/null
+        
+        # 2. Source the theme file so all `set -gF` commands re-evaluate with new colors
+        if tmux -S "$sock" source-file "$theme_conf" 2>/dev/null; then
+            # Force every attached client to redraw status + panes
+            local clients
+            clients=$(tmux -S "$sock" list-clients -F '#{client_tty}' 2>/dev/null)
+            if [[ -n "$clients" ]]; then
+                while IFS= read -r tty; do
+                    [[ -z "$tty" ]] && continue
+                    tmux -S "$sock" refresh-client -t "$tty" -S 2>/dev/null
+                    tmux -S "$sock" refresh-client -t "$tty" 2>/dev/null
+                done <<< "$clients"
+            fi
+            ((count++))
+            echo "Tmux: Reloaded ${sock:t}"
+        fi
+    done
+    (( count == 0 )) && echo "Tmux: No live sockets found"
+}
+
 update_nvim() {
     local theme_name="$1"
     local colorscheme=$(cat "$THEME_BASE_DIR/$theme_name/nvimtheme" 2>/dev/null || echo "ultraviolence")
+
+    find "${TMPDIR:-/tmp}" -name "nvim-${USER}-*" -type s -print0 2>/dev/null |
+        xargs -0 -I{} nvim --server {} --remote-send "<Esc>:colorscheme $colorscheme<CR>"
     
-    find "${TMPDIR:-/tmp}" -name "nvim-${USER}-*" -type s -print0 2>/dev/null \
-        | xargs -0 -I{} nvim --server {} --remote-send "<Esc>:colorscheme $colorscheme<CR>"
     sleep 1
-    find "${TMPDIR:-/tmp}" -name "nvim-${USER}-*" -type s -print0 2>/dev/null \
-        | xargs -0 -I{} nvim --server {} --remote-send '<Esc>:Lazy reload lualine.nvim<CR>'
+    
+    find "${TMPDIR:-/tmp}" -name "nvim-${USER}-*" -type s -print0 2>/dev/null |
+        xargs -0 -I{} nvim --server {} --remote-send '<Esc>:Lazy reload lualine.nvim<CR>'
 }
 
 yazi-restart() {
     if pgrep -x yazi >/dev/null; then
         local pids=($(pgrep -x yazi))
         local restarted=0
-        
+
         for pid in "${pids[@]}"; do
             local current_pid=$pid
             local wid=""
-            
+
             while [[ $current_pid -gt 1 && -z "$wid" ]]; do
                 wid=$(xdotool search --all --pid $current_pid 2>/dev/null | head -1)
-                
+
                 if [[ -n "$wid" ]]; then
                     break
                 fi
-                
+
                 current_pid=$(ps -o ppid= -p $current_pid 2>/dev/null | tr -d ' ')
                 [[ -z "$current_pid" ]] && break
             done
-            
+
             kill $pid
-            
+
             if [[ -n "$wid" ]]; then
-                printf "Restarting yazi in window %s (found via PID %s)\n" "$wid" "$current_pid"
-                
+                printf "Restarting yazi in window %s (found via PID %s)\\\\n" "$wid" "$current_pid"
+
                 xdotool windowactivate "$wid"
                 sleep 0.1
                 xdotool type --window "$wid" "yazi"
                 xdotool key --window "$wid" Return
                 ((restarted++))
             else
-                printf "Could not find window for yazi PID %s\n" "$pid"
+                printf "Could not find window for yazi PID %s\\\\n" "$pid"
             fi
         done
-        
-        printf "Restarted yazi in %d window(s)\n" "$restarted"
+
+        printf "Restarted yazi in %d window(s)\\\\n" "$restarted"
     fi
 }
 
 set_background() {
-
     killall screenweaver 2>/dev/null || true
     set_background.sh "$HOME/.backgrounds"
-
 }
 
 set_theme() {
     local theme_name="$1"
     local theme_dir="$THEME_BASE_DIR/$theme_name"
-    
+
     if [[ ! -d "$theme_dir" ]]; then
         echo "Error: Theme '$theme_name' does not exist"
         return 1
     fi
-    
+
     echo "$theme_name" > "$THEME_FILE"
     flip_all_configs "$theme_name"
     flip_system_configs "$theme_name"
@@ -281,15 +322,16 @@ set_theme() {
     set_grub_theme "$theme_name"
     set_background
     reload_st
+    reload_tabbed
     update_nvim "$theme_name"
     reload_xsettingsd
     reload_zsh
-    killall dunst
+    reload_tmux
+    killall dunst 2>/dev/null
     yazi-restart
     reload_dwm
-    
-    
-    echo "${theme_name^} theme activated!"
+
+    echo "${(C)theme_name} theme activated!"
 }
 
 list_themes() {
@@ -298,7 +340,7 @@ list_themes() {
         echo "No themes found in $THEME_BASE_DIR"
         return 1
     fi
-    
+
     for theme in "${themes[@]}"; do
         if [[ "$theme" == "$DWM_THEME" ]]; then
             echo "$theme (current)"
